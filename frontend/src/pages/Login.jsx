@@ -12,21 +12,21 @@ import {
 
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 function Login() {
 
+  const navigate = useNavigate();
+
 
   const handleGoogleSuccess = async (response) => {
+  try {
 
-    console.log(response);
-
-    // Later backend connection:
-  
     const res = await axios.post(
       "http://localhost:5000/api/auth/google",
       {
-        token: response.credential
+        token: response.credential,
       }
     );
 
@@ -36,7 +36,19 @@ function Login() {
     );
     
 
-  };
+    localStorage.setItem(
+      "user",
+      JSON.stringify(res.data.user)
+    );
+    navigate("/dashboard");
+    console.log("Logged in:", res.data);
+
+  } catch(error) {
+
+    console.error(error);
+
+  }
+};
 
 
 
