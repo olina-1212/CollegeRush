@@ -7,8 +7,6 @@ import listingRoutes from "./routes/listingRoutes.js";
 import wishlistRoutes from "./routes/wishlistRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 
-
-
 const app = express();
 
 // Middleware

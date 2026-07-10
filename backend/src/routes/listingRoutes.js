@@ -6,11 +6,18 @@ import {
   updateListing,
   deleteListing,
 } from "../controllers/listingController.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
+import upload from "../middlewares/uploadMiddleware.js";
 
 const router = express.Router();
 
 // Create Listing
-router.post("/", createListing);
+router.post(
+  "/",
+  authMiddleware,
+  upload.array("images", 5),
+  createListing
+);
 
 // Get All Listings
 router.get("/", getAllListings);
@@ -19,9 +26,9 @@ router.get("/", getAllListings);
 router.get("/:id", getListingById);
 
 // Update Listing
-router.put("/:id", updateListing);
+router.put("/:id",authMiddleware, updateListing);
 
 // Delete Listing
-router.delete("/:id", deleteListing);
+router.delete("/:id", authMiddleware, deleteListing);
 
 export default router;

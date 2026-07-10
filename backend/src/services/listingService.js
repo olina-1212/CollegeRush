@@ -1,7 +1,7 @@
 import prisma from "../config/prisma.js";
 
 export const createListing = async (data) => {
-  return await prisma.listing.create({
+  const listing = await prisma.listing.create({
     data: {
       title: data.title,
       description: data.description,
@@ -10,7 +10,23 @@ export const createListing = async (data) => {
       category: data.category,
       condition: data.condition,
       location: data.location,
-      sellerId: data.sellerId, // Temporary. Later this will come from JWT.
+      sellerId: data.sellerId,
+    },
+  });
+
+  if (data.images && data.images.length > 0) {
+    await prisma.listingImage.createMany({
+      data: data.images.map((image) => ({
+        url: image.url,
+        publicId: image.publicId,
+        listingId: listing.id,
+      })),
+    });
+  }
+
+  return await prisma.listing.findUnique({
+    where: {
+      id: listing.id,
     },
     include: {
       seller: true,
@@ -27,9 +43,15 @@ export const getAllListings = async (filters) => {
     condition,
     minPrice,
     maxPrice,
+    page = 1,
+    limit = 12,
   } = filters;
 
-  return await prisma.listing.findMany({
+  const skip = (Number(page) - 1) * Number(limit);
+
+ return await prisma.listing.findMany({
+  skip,
+  take: Number(limit),
     where: {
       ...(search && {
         OR: [

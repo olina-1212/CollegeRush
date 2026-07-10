@@ -9,9 +9,7 @@ export const listingSchema = z.object({
     .string()
     .min(10, "Description must be at least 10 characters"),
 
-  price: z
-    .number()
-    .positive("Price must be greater than 0"),
+  price: z.coerce.number().positive("Price must be greater than 0"),
 
   type: z.enum(["SELL", "RENT"]),
 
@@ -29,5 +27,4 @@ export const listingSchema = z.object({
 
   location: z.string().optional(),
 
-  sellerId: z.string().uuid(),
 });
