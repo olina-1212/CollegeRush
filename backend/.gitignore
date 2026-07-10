@@ -29,3 +29,4 @@ coverage/
 
 # Vite
 vite.svg
+/src/generated/prisma
