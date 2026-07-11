@@ -2,6 +2,7 @@ import express from "express";
 import {
   createListing,
   getAllListings,
+  getMyListings,
   getListingById,
   updateListing,
   deleteListing,
@@ -19,14 +20,18 @@ router.post(
   createListing
 );
 
-// Get All Listings
+// Get All Listings (Marketplace)
 router.get("/", getAllListings);
+
+// Get Logged-in User's Listings
+// IMPORTANT: This must come BEFORE "/:id"
+router.get("/my", authMiddleware, getMyListings);
 
 // Get Single Listing
 router.get("/:id", getListingById);
 
 // Update Listing
-router.put("/:id",authMiddleware, updateListing);
+router.put("/:id", authMiddleware, updateListing);
 
 // Delete Listing
 router.delete("/:id", authMiddleware, deleteListing);

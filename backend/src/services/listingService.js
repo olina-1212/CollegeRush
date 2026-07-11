@@ -95,6 +95,21 @@ export const getAllListings = async (filters) => {
   });
 };
 
+export const getMyListings = async (sellerId) => {
+  return await prisma.listing.findMany({
+    where: {
+      sellerId,
+    },
+    include: {
+      seller: true,
+      images: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};
+
 export const getListingById = async (id) => {
   return await prisma.listing.findUnique({
     where: {
@@ -107,14 +122,22 @@ export const getListingById = async (id) => {
   });
 };
 
-export const updateListing = async (id, data) => {
+export const updateListing = async (id, sellerId, data) => {
+  const listing = await prisma.listing.findUnique({
+    where: { id },
+  });
+
+  if (!listing) {
+    throw new Error("Listing not found");
+  }
+
+  if (listing.sellerId !== sellerId) {
+    throw new Error("You are not authorized to update this listing");
+  }
+
   return await prisma.listing.update({
-    where: {
-      id,
-    },
-    data: {
-      ...data,
-    },
+    where: { id },
+    data,
     include: {
       seller: true,
       images: true,
@@ -122,10 +145,20 @@ export const updateListing = async (id, data) => {
   });
 };
 
-export const deleteListing = async (id) => {
+export const deleteListing = async (id, sellerId) => {
+  const listing = await prisma.listing.findUnique({
+    where: { id },
+  });
+
+  if (!listing) {
+    throw new Error("Listing not found");
+  }
+
+  if (listing.sellerId !== sellerId) {
+    throw new Error("You are not authorized to delete this listing");
+  }
+
   return await prisma.listing.delete({
-    where: {
-      id,
-    },
+    where: { id },
   });
 };

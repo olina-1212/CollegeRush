@@ -3,56 +3,30 @@ import { listingSchema } from "../validations/listingValidation.js";
 import cloudinary from "../config/cloudinary.js";
 import streamifier from "streamifier";
 
-const uploadToCloudinary = (file) => {
-  return new Promise((resolve, reject) => {
-
-    const stream = cloudinary.uploader.upload_stream(
-      {
-        folder: "CollegeRush",
-      },
-      (error, result) => {
-        if (result) {
-          resolve({
-            url: result.secure_url,
-            publicId: result.public_id,
-          });
-        } else {
-          reject(error);
-        }
-      }
-    );
-
-    streamifier
-      .createReadStream(file.buffer)
-      .pipe(stream);
-  });
-};
 
 export const createListing = async (req, res) => {
   try {
+    console.log("1. Entered createListing");
+
     const validatedData = listingSchema.parse(req.body);
+    console.log("2. Validation passed");
 
-let images = [];
-
-if (req.files && req.files.length > 0) {
-  images = await Promise.all(
-    req.files.map((file) =>
-      uploadToCloudinary(file)
-    )
-  );
-}
-
-const listing = await listingService.createListing({
+    const listing = await listingService.createListing({
   ...validatedData,
   sellerId: req.user.id,
-  images,
+  images: req.body.images || [],
 });
+
+    console.log("6. Listing created successfully");
+
     res.status(201).json({
       success: true,
       message: "Listing created successfully",
       data: listing,
     });
   } catch (error) {
+    console.error(error);
+
     res.status(400).json({
       success: false,
       message: error.message,
@@ -69,6 +43,24 @@ export const getAllListings = async (req, res) => {
       data: listings,
     });
   } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getMyListings = async (req, res) => {
+  try {
+    const listings = await listingService.getMyListings(req.user.id);
+
+    res.status(200).json({
+      success: true,
+      data: listings,
+    });
+  } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       success: false,
       message: error.message,
