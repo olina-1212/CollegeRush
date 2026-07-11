@@ -134,9 +134,6 @@ function Dashboard() {
 
       }
 
-
-
-
       if(
         filters.type !== "ALL" &&
         item.type !== filters.type
@@ -158,10 +155,6 @@ function Dashboard() {
 
       }
 
-
-
-
-
       if(
         filters.condition !== "ALL" &&
         item.condition !== filters.condition
@@ -170,11 +163,6 @@ function Dashboard() {
         return false;
 
       }
-
-
-
-
-
       if(
         Number(item.price) >
         filters.price
@@ -183,49 +171,24 @@ function Dashboard() {
         return false;
 
       }
-
-
-
-
-
       return true;
-
-
     });
-
-
 
   },[
     listings,
     filters,
     activeCategory
   ]);
-
-
-
-
-
-
-
-
-
   return (
 
     <AppShell>
-
 
       <div className="
         flex
         flex-col
         gap-6
       ">
-
-
-
-
         {/* HEADER */}
-
-
         <div>
 
 
@@ -239,8 +202,6 @@ function Dashboard() {
 
           </h1>
 
-
-
           <p className="
             mt-1
             text-sm
@@ -253,13 +214,6 @@ function Dashboard() {
 
 
         </div>
-
-
-
-
-
-
-
         {/* CATEGORY CHIPS */}
 
 
@@ -313,15 +267,6 @@ function Dashboard() {
 
         </div>
 
-
-
-
-
-
-
-
-
-
         <div className="
           flex
           gap-8
@@ -347,25 +292,12 @@ function Dashboard() {
 
 
           </div>
-
-
-
-
-
-
-
-
-
           {/* PRODUCTS */}
-
-
 
           <div className="
             min-w-0
             flex-1
           ">
-
-
 
             <div className="
               mb-4
@@ -384,19 +316,7 @@ function Dashboard() {
                 {filteredListings.length} results
 
               </p>
-
-
-
             </div>
-
-
-
-
-
-
-
-
-
             {
 
               loading ?
@@ -434,12 +354,7 @@ function Dashboard() {
                 />
 
               )
-
-
-
               :
-
-
 
               filteredListings.length===0 ?
 
@@ -460,7 +375,6 @@ function Dashboard() {
 
 
               :
-
 
 
               (
@@ -490,8 +404,6 @@ function Dashboard() {
                     ))
                   }
 
-
-
                 </div>
 
               )
@@ -499,33 +411,11 @@ function Dashboard() {
 
             }
 
-
-
-
           </div>
 
-
-
-
-
         </div>
-
-
-
-
-
       </div>
-
-
-
-
     </AppShell>
-
   );
-
-
 }
-
-
-
 export default Dashboard;
