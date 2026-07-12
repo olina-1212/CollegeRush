@@ -61,7 +61,7 @@ function Navbar() {
             asChild
             className="hidden rounded-2xl bg-blue-600 px-5 shadow-md hover:bg-blue-700 md:flex"
           >
-            <Link to="/create">
+            <Link to="/create-listing">
               <Plus className="mr-2 h-4 w-4" />
               Sell / Rent Item
             </Link>

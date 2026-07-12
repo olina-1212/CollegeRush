@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Trash2,
   Eye,
@@ -16,8 +16,8 @@ function MyListings() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     fetchListings();
   }, []);
@@ -319,12 +319,13 @@ Create your first listing and it'll appear here.
             </Button>
           </Link>
 
-          <Button
-            variant="outline"
-            className="h-9 rounded-xl px-4 text-sm"
-          >
-            Edit
-          </Button>
+         <Button
+  variant="outline"
+  className="h-9 rounded-xl px-4 text-sm"
+  onClick={() => navigate(`/edit-listing/${listing.id}`)}
+>
+  Edit
+</Button>
 
           <Button
             variant="destructive"

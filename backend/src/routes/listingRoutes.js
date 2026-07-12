@@ -31,7 +31,12 @@ router.get("/my", authMiddleware, getMyListings);
 router.get("/:id", getListingById);
 
 // Update Listing
-router.put("/:id", authMiddleware, updateListing);
+router.put(
+  "/:id",
+  authMiddleware,
+  upload.array("images", 5),
+  updateListing
+);
 
 // Delete Listing
 router.delete("/:id", authMiddleware, deleteListing);

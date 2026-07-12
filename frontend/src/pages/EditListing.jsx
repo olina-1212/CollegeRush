@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { createListing } from "../api/listingApi";
 
 import AppShell from "../components/dashboard/AppShell";
@@ -25,7 +25,7 @@ function CreateListing() {
 
 
 const navigate = useNavigate();
-
+const { id } = useParams();
 
 const [form,setForm] = useState({
 
@@ -38,12 +38,87 @@ condition:"LIKE_NEW",
 location:""
 
 });
+useEffect(() => {
+  const fetchListing = async () => {
+    try {
+      const res = await api.get(`/listings/${id}`);
+
+      const listing = res.data.data;
+
+      setForm({
+        title: listing.title,
+        description: listing.description,
+        price: listing.price,
+        type: listing.type,
+        category: listing.category,
+        condition: listing.condition,
+        location: listing.location || "",
+      });
+
+    } catch (err) {
+      console.error(err);
+      alert("Couldn't load listing");
+    }
+  };
+
+  fetchListing();
+}, [id]);
 
 
 const [images,setImages] = useState([]);
+useEffect(() => {
+  const fetchListing = async () => {
+    try {
+      const res = await api.get(`/listings/${id}`);
+
+      const listing = res.data.data;
+
+      setForm({
+        title: listing.title,
+        description: listing.description,
+        price: listing.price,
+        type: listing.type,
+        category: listing.category,
+        condition: listing.condition,
+        location: listing.location || "",
+      });
+
+    } catch (err) {
+      console.error(err);
+      alert("Couldn't load listing");
+    }
+  };
+
+  fetchListing();
+}, [id]);
 
 
 const [loading,setLoading] = useState(false);
+useEffect(() => {
+  const fetchListing = async () => {
+    try {
+      const res = await api.get(`/listings/${id}`);
+
+      const listing = res.data.data;
+
+      setForm({
+        title: listing.title,
+        description: listing.description,
+        price: listing.price,
+        type: listing.type,
+        category: listing.category,
+        condition: listing.condition,
+        location: listing.location || "",
+      });
+
+    } catch (err) {
+      console.error(err);
+      alert("Couldn't load listing");
+    }
+  };
+
+  fetchListing();
+}, [id]);
 
 
 
@@ -64,40 +139,23 @@ setForm({
 const handleSubmit=async(e)=>{
 
 e.preventDefault();
-
-
 try{
-
-
 setLoading(true);
-
-
 const data = new FormData();
-
-
 Object.keys(form).forEach(key=>{
-
 data.append(
 key,
 form[key]
 );
-
 });
-
-
 images.forEach(img=>{
-
 data.append(
 "images",
 img
 );
-
 });
-
-
-
-await api.post(
-"/listings",
+await api.put(
+`/listings/${id}`,
 data,
 {
 headers:{
@@ -105,18 +163,10 @@ headers:{
 }
 }
 );
-
-
-
 navigate("/my-listings");
-
-
 }
-
 catch(err){
-
 console.error(err);
-
 alert(
 err.response?.data?.message ||
 "Something went wrong"
@@ -132,7 +182,6 @@ setLoading(false);
 
 
 };
-
 
 
 return (
@@ -205,7 +254,7 @@ font-bold
 tracking-tight
 ">
 
-Create Listing
+Edit Listing
 
 </h1>
 
@@ -215,7 +264,7 @@ mt-1
 text-slate-500
 ">
 
-Sell or rent anything across your campus.
+Update your listing details.
 
 </p>
 
@@ -428,15 +477,7 @@ NOTES
 <option>
 ELECTRONICS
 </option>
-<option>
-SUPPLIES
-</option>
-<option>
-ESSENTIALS
-</option>
-<option>
-LAB EQUIPMENT
-</option>
+
 <option>
 OTHERS
 </option>
@@ -534,9 +575,7 @@ Images
 
 </h2>
 
-<p className="mt-2 text-xs text-slate-500">
-   Image should be under 5 MB.
-</p>
+
 
 <label className="
 flex
@@ -596,7 +635,7 @@ setImages([...e.target.files])
     transition
   "
 >
-  {loading ? "Publishing..." : "🚀 Publish Listing"}
+  {loading ? "Saving..." : "Save Changes"}
 </Button>
 </form>
 {/* PREVIEW */}

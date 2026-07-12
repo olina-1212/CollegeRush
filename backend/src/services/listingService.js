@@ -122,21 +122,11 @@ export const getListingById = async (id) => {
   });
 };
 
-export const updateListing = async (id, sellerId, data) => {
-  const listing = await prisma.listing.findUnique({
-    where: { id },
-  });
-
-  if (!listing) {
-    throw new Error("Listing not found");
-  }
-
-  if (listing.sellerId !== sellerId) {
-    throw new Error("You are not authorized to update this listing");
-  }
-
+export const updateListing = async (id, data) => {
   return await prisma.listing.update({
-    where: { id },
+    where: {
+      id,
+    },
     data,
     include: {
       seller: true,

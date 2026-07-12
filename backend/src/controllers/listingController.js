@@ -6,28 +6,52 @@ import streamifier from "streamifier";
 
 export const createListing = async (req, res) => {
   try {
-    console.log("1. Entered createListing");
-
     const validatedData = listingSchema.parse(req.body);
-    console.log("2. Validation passed");
+console.log("FILES:", req.files);
+    const uploadedImages = [];
+
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const result = await new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            {
+              folder: "college-rush/listings",
+            },
+            (error, result) => {
+              if (error) return reject(error);
+              resolve(result);
+            }
+          );
+
+          streamifier.createReadStream(file.buffer).pipe(stream);
+        });
+
+        uploadedImages.push({
+          
+          url: result.secure_url,
+          publicId: result.public_id,
+
+        });
+        console.log("Uploaded:", result.secure_url);
+      }
+    }
 
     const listing = await listingService.createListing({
-  ...validatedData,
-  sellerId: req.user.id,
-  images: req.body.images || [],
-});
-
-    console.log("6. Listing created successfully");
-
-    res.status(201).json({
+      ...validatedData,
+      sellerId: req.user.id,
+      images: uploadedImages,
+    });
+console.log(uploadedImages);
+    return res.status(201).json({
       success: true,
       message: "Listing created successfully",
       data: listing,
     });
+
   } catch (error) {
     console.error(error);
 
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -111,19 +135,23 @@ export const updateListing = async (req, res) => {
 
     const validatedData = listingSchema.partial().parse(req.body);
 
+    // 👇 SEND THE VALIDATED DATA TO THE SERVICE
     const updatedListing = await listingService.updateListing(
-      req.params.id,
-      validatedData
-    );
+    req.params.id,
+    req.user.id,
+    validatedData
+);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Listing updated successfully",
       data: updatedListing,
     });
 
   } catch (error) {
-    res.status(400).json({
+    console.error(error);
+
+    return res.status(400).json({
       success: false,
       message: error.message,
     });

@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 
 
 const categories = [
-  "All",
+  "ALL",
   "BOOKS",
   "NOTES",
   "SUPPLIES",
@@ -15,7 +15,7 @@ const categories = [
 
 
 const conditions = [
-  "All",
+  "ALL",
   "NEW",
   "LIKE_NEW",
   "GOOD",
@@ -208,6 +208,10 @@ Electronics
 Essentials
 </option>
 
+<option value="LAB_EQUIPMENT">
+Lab Equipment
+</option>
+
 <option value="OTHERS">
 Others
 </option>
@@ -231,15 +235,6 @@ pointer-events-none
 
 
       </FilterSection>
-
-
-
-
-
-
-
-
-
       {/* PRICE */}
 
 
@@ -294,29 +289,11 @@ pointer-events-none
 
 
       </FilterSection>
-
-
-
-
-
-
-
-
-
-      {/* CONDITION */}
-
-
-
+{/* CONDITION */}
       <FilterSection title="Condition">
-
-
         <div className="flex flex-wrap gap-2">
-
-
         {
           conditions.map((item)=>(
-
-
             <button
 
               key={item}
@@ -366,10 +343,6 @@ pointer-events-none
   );
 }
 
-
-
-
-
 function FilterSection({
   title,
   children
@@ -386,18 +359,8 @@ return (
 {title}
 
 </h3>
-
-
 {children}
-
-
 </div>
-
 );
-
-
 }
-
-
-
 export default FilterPanel;

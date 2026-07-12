@@ -15,74 +15,33 @@ const CATEGORIES = [
   "ELECTRONICS",
   "SUPPLIES",
   "ESSENTIALS",
-  "LAB EQUIPMENT",
+  "LAB_EQUIPMENT",
   "OTHERS"
 ];
-
-
-
 function Dashboard() {
-
-
   const [listings,setListings] = useState([]);
-
   const [loading,setLoading] = useState(true);
-
   const [error,setError] = useState("");
-
-
-
   const [activeCategory,setActiveCategory] = useState("ALL");
-
-
-
   const [filters,setFilters] = useState({
-
     type:"ALL",
-
     category:"ALL",
-
     price:100000,
-
     condition:"ALL",
-
   });
-
-
-
-
-
-
-
   // FETCH LISTINGS
-
-
   useEffect(()=>{
-
-
     const fetchListings = async()=>{
-
-
       try{
-
-
         const res = await axios.get(
           "http://localhost:5000/api/listings"
         );
-
-
         setListings(
           res.data.data || []
         );
-
-
       }
-
       catch(err){
-
-
         console.error(err);
-
         setError(
           "Failed to load listings"
         );
@@ -95,29 +54,10 @@ function Dashboard() {
         setLoading(false);
 
       }
-
-
     };
-
-
-
     fetchListings();
-
-
-
   },[]);
-
-
-
-
-
-
-
-
-
-  // FILTER LOGIC
-
-
+ // FILTER LOGIC
   const filteredListings = useMemo(()=>{
 
 
@@ -140,12 +80,7 @@ function Dashboard() {
       ){
 
         return false;
-
       }
-
-
-
-
       if(
         filters.category !== "ALL" &&
         item.category !== filters.category
@@ -244,7 +179,7 @@ function Dashboard() {
                   ?
                   "All"
                   :
-                  category
+                  category.replaceAll("_", " ")
                 }
 
 
@@ -262,35 +197,20 @@ function Dashboard() {
 
             ))
           }
-
-
-
         </div>
 
         <div className="
           flex
           gap-8
         ">
-
-
-
-
           {/* FILTERS */}
-
-
-
           <div className="hidden w-80 shrink-0 lg:block">
-
-
             <FilterPanel
 
               filters={filters}
 
               setFilters={setFilters}
-
             />
-
-
           </div>
           {/* PRODUCTS */}
 
@@ -305,9 +225,6 @@ function Dashboard() {
               justify-between
               items-center
             ">
-
-
-
               <p className="
                 text-sm
                 text-muted-foreground
@@ -335,12 +252,7 @@ function Dashboard() {
                 </div>
 
               )
-
-
-
               :
-
-
               error ?
 
               (
@@ -367,16 +279,9 @@ function Dashboard() {
                   description="
                     Try changing filters or add a new listing.
                   "
-
                 />
-
               )
-
-
-
               :
-
-
               (
 
                 <div className="
