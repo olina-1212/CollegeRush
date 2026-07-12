@@ -1,5 +1,5 @@
 import prisma from "../config/prisma.js";
-
+import cloudinary from "../config/cloudinary.js";
 export const createListing = async (data) => {
   const listing = await prisma.listing.create({
     data: {
@@ -122,12 +122,43 @@ export const getListingById = async (id) => {
   });
 };
 
-export const updateListing = async (id, data) => {
+export const updateListing = async (id, data, uploadedImages) => {
+
+  if (uploadedImages.length > 0) {
+
+    const oldImages = await prisma.listingImage.findMany({
+      where: {
+        listingId: id,
+      },
+    });
+
+    for (const image of oldImages) {
+      if (image.publicId) {
+        await cloudinary.uploader.destroy(image.publicId);
+      }
+    }
+
+    await prisma.listingImage.deleteMany({
+      where: {
+        listingId: id,
+      },
+    });
+  }
+
   return await prisma.listing.update({
     where: {
       id,
     },
-    data,
+    data: {
+      ...data,
+
+      ...(uploadedImages.length > 0 && {
+        images: {
+          create: uploadedImages,
+        },
+      }),
+    },
+
     include: {
       seller: true,
       images: true,

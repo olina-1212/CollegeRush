@@ -134,14 +134,36 @@ export const updateListing = async (req, res) => {
     }
 
     const validatedData = listingSchema.partial().parse(req.body);
+const uploadedImages = [];
 
+if (req.files && req.files.length > 0) {
+  for (const file of req.files) {
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: "college-rush/listings",
+        },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+
+      streamifier.createReadStream(file.buffer).pipe(stream);
+    });
+
+    uploadedImages.push({
+      url: result.secure_url,
+      publicId: result.public_id,
+    });
+  }
+}
     // 👇 SEND THE VALIDATED DATA TO THE SERVICE
     const updatedListing = await listingService.updateListing(
-    req.params.id,
-    req.user.id,
-    validatedData
+  req.params.id,
+  validatedData,
+  uploadedImages
 );
-
     return res.status(200).json({
       success: true,
       message: "Listing updated successfully",

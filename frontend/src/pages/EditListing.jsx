@@ -162,8 +162,7 @@ headers:{
 "Content-Type":"multipart/form-data"
 }
 }
-);
-navigate("/my-listings");
+);navigate("/profile");
 }
 catch(err){
 console.error(err);
@@ -553,6 +552,36 @@ onChange={handleChange}
 placeholder="Enter price"
 
 />
+
+</section>
+
+{/* COLLEGE */}
+
+<section
+  className="
+  rounded-3xl
+  bg-white
+  p-7
+  shadow-xl
+  shadow-blue-100/40
+  "
+>
+  <div className="flex items-center gap-3 mb-5">
+
+    <MapPin className="text-blue-600" />
+
+    <h2 className="font-semibold text-lg">
+      College
+    </h2>
+
+  </div>
+
+  <Input
+    name="location"
+    value={form.location}
+    onChange={handleChange}
+    placeholder="Enter College Name"
+  />
 
 </section>
 {/* IMAGE */}
