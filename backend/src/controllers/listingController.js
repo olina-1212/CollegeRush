@@ -150,13 +150,15 @@ export const deleteListing = async (req, res) => {
 
     await listingService.deleteListing(req.params.id);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Listing deleted successfully",
     });
 
   } catch (error) {
-    res.status(500).json({
+    console.error("DELETE ERROR:", error);
+
+    return res.status(500).json({
       success: false,
       message: error.message,
     });

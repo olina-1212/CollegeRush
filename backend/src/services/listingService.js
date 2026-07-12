@@ -145,20 +145,10 @@ export const updateListing = async (id, sellerId, data) => {
   });
 };
 
-export const deleteListing = async (id, sellerId) => {
-  const listing = await prisma.listing.findUnique({
-    where: { id },
-  });
-
-  if (!listing) {
-    throw new Error("Listing not found");
-  }
-
-  if (listing.sellerId !== sellerId) {
-    throw new Error("You are not authorized to delete this listing");
-  }
-
+export const deleteListing = async (id) => {
   return await prisma.listing.delete({
-    where: { id },
+    where: {
+      id,
+    },
   });
 };
