@@ -41,7 +41,9 @@ function Login() {
       JSON.stringify(res.data.user)
     );
     navigate("/dashboard");
-    console.log("Logged in:", res.data);
+    console.log("FULL RESPONSE:", res.data);
+console.log("TOKEN:", res.data.token);
+console.log("USER:", res.data.user);
 
   } catch(error) {
 
@@ -138,18 +140,8 @@ function Login() {
           "/>
 
 
-
         </div>
-
-
-
-
-
-
-
         {/* RIGHT SECTION */}
-
-
         <div className="
           flex 
           items-center 
@@ -175,11 +167,6 @@ function Login() {
             ">
               CollegeSquare
             </div>
-
-
-
-
-
             <div className="
               rounded-3xl 
               border 
@@ -333,18 +320,7 @@ function Login() {
   );
 
 }
-
-
-
-
-
-
-
-
-
 function FeatureItem({children}){
-
-
 return (
 
 <div className="
@@ -385,15 +361,6 @@ return (
 
 
 }
-
-
-
-
-
-
-
-
-
 function CampusIllustration(){
 
 
@@ -501,17 +468,8 @@ text-slate-600
 
 </span>
 
-
 </div>
-
-
-))
-
-
-}
-
-
-
+))}
 </div>
 
 
@@ -519,9 +477,4 @@ text-slate-600
 
 
 }
-
-
-
-
-
 export default Login;

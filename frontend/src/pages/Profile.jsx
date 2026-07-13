@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import {
   Trash2,
   Eye,
@@ -17,6 +18,7 @@ function MyListings() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
   
   useEffect(() => {
     fetchListings();
@@ -24,8 +26,10 @@ function MyListings() {
 
   const fetchListings = async () => {
     try {
-      const res = await api.get("/listings/my");
-      setListings(res.data.data || []);
+      const res = await api.get("/users/profile");
+
+setProfile(res.data.data);
+setListings(res.data.data.listings || []);
     } catch (err) {
       console.error(err);
       setError("Failed to load your listings.");
@@ -58,6 +62,101 @@ const stats = useMemo(() => {
   
   return (
     <AppShell>
+
+      {profile && (
+
+<div className="
+mb-10
+overflow-hidden
+rounded-[32px]
+bg-white
+shadow-xl
+">
+
+<div className="
+h-36
+bg-gradient-to-r
+from-blue-600
+via-indigo-500
+to-cyan-400
+"/>
+
+<div className="
+relative
+px-8
+pb-8
+">
+
+<img
+src={profile.avatarUrl}
+alt={profile.name}
+className="
+-mt-14
+h-28
+w-28
+rounded-full
+border-4
+border-white
+object-cover
+shadow-xl
+"
+/>
+
+<div className="
+mt-5
+flex
+items-start
+justify-between
+">
+
+<div>
+
+<h1 className="text-3xl font-bold">
+
+{profile.name}
+
+</h1>
+
+<p className="text-slate-500">
+
+{profile.email}
+
+</p>
+
+<p className="mt-2 text-sm text-slate-500">
+
+🎓 {profile.collegeName || "Add your college"}
+
+</p>
+
+{profile.bio && (
+
+<p className="mt-3 max-w-2xl text-slate-600">
+
+{profile.bio}
+
+</p>
+
+)}
+
+</div>
+
+<Button
+variant="outline"
+className="rounded-xl"
+>
+
+Edit Profile
+
+</Button>
+
+</div>
+
+</div>
+
+</div>
+
+)}
       <div className="flex items-end justify-between mb-10">
 
         <div>
