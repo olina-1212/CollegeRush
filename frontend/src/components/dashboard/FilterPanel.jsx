@@ -102,7 +102,7 @@ function FilterPanel({
 
 
           {
-            ["All","SELL","RENT"].map((item)=>(
+            ["ALL","SELL","RENT"].map((item)=>(
 
 
               <button
@@ -184,7 +184,7 @@ focus:ring-blue-500
 "
 >
 
-<option value="All">
+<option value="ALL">
 All Categories
 </option>
 
@@ -265,9 +265,9 @@ pointer-events-none
 
           min="0"
 
-          max="50000"
+          max="20000"
 
-          step="500"
+          step="200"
 
           value={filters.price}
 

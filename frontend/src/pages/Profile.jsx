@@ -152,58 +152,85 @@ justify-between
 <div>
 
 <input
-name="name"
-value={form.name}
-onChange={handleChange}
-className="
-mt-1
-w-full
-border-0
-bg-transparent
-text-3xl
-font-bold
-outline-none
-"
+  name="name"
+  value={form.name}
+  onChange={handleChange}
+  className="
+    mt-1
+    w-full
+    rounded-xl
+    bg-transparent
+    px-2
+    py-1
+    text-3xl
+    font-bold
+    text-slate-900
+    outline-none
+    transition-all
+    duration-200
+    hover:bg-slate-50
+    focus:bg-slate-50
+    focus:ring-2
+    focus:ring-blue-200
+  "
 />
-
 <p className="text-slate-500">
 
 {profile.email}
-
 </p>
 
 <input
-name="collegeName"
-value={form.collegeName}
-onChange={handleChange}
-placeholder="Your College"
-className="
-mt-3
-w-full
-rounded-xl
-border
-px-3
-py-2
-"
+  name="collegeName"
+  value={form.collegeName}
+  onChange={handleChange}
+  placeholder="Your College"
+  className="
+    mt-4
+    w-full
+    rounded-xl
+    bg-slate-50
+    px-4
+    py-3
+    text-sm
+    font-medium
+    text-slate-700
+    placeholder:text-slate-400
+    outline-none
+    transition-all
+    duration-200
+    hover:bg-slate-100
+    focus:bg-white
+    focus:ring-2
+    focus:ring-blue-200
+  "
 />
 
 <textarea
-name="bio"
-value={form.bio}
-onChange={handleChange}
-rows={4}
-placeholder="Tell others about yourself..."
-className="
-mt-4
-w-full
-rounded-xl
-border
-p-3
-resize-none
-"
+  name="bio"
+  value={form.bio}
+  onChange={handleChange}
+  rows={4}
+  placeholder="Tell others about yourself..."
+  className="
+    mt-5
+    w-full
+    rounded-2xl
+    bg-slate-50
+    p-4
+    text-sm
+    leading-6
+    text-slate-700
+    placeholder:text-slate-400
+    outline-none
+    resize-none
+    transition-all
+    duration-200
+    hover:bg-slate-100
+    focus:bg-white
+    focus:ring-2
+    focus:ring-blue-200
+  "
 />
-
-)
 
 </div>
 
