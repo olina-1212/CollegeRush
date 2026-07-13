@@ -1,22 +1,8 @@
-import prisma from "../config/prisma.js";
+import * as userService from "../services/userService.js";
 
 export const getProfile = async (req, res) => {
   try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: req.user.id,
-      },
-      include: {
-        listings: {
-          include: {
-            images: true,
-          },
-          orderBy: {
-            createdAt: "desc",
-          },
-        },
-      },
-    });
+    const user = await userService.getProfile(req.user.id);
 
     if (!user) {
       return res.status(404).json({
@@ -25,17 +11,41 @@ export const getProfile = async (req, res) => {
       });
     }
 
-    res.json({
+    return res.status(200).json({
       success: true,
       data: user,
     });
 
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: err.message,
+      message: error.message,
+    });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+
+    const updatedUser = await userService.updateProfile(
+      req.user.id,
+      req.body
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      data: updatedUser,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 };

@@ -14,29 +14,69 @@ import api from "../api/apiClient";
 import { Button } from "../components/ui/button";
 
 function MyListings() {
+  const [profile, setProfile] = useState(null);
+
+  const [form, setForm] = useState({
+    name: "",
+    collegeName: "",
+    bio: "",
+  });
+
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const [profile, setProfile] = useState(null);
-  
+  const [editing, setEditing] = useState(false);
+
   useEffect(() => {
-    fetchListings();
+    fetchProfile();
   }, []);
 
-  const fetchListings = async () => {
-    try {
-      const res = await api.get("/users/profile");
+  const handleChange = (e) => {
+  setEditing(true);
 
-setProfile(res.data.data);
-setListings(res.data.data.listings || []);
-    } catch (err) {
-      console.error(err);
-      setError("Failed to load your listings.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  setForm((prev) => ({
+    ...prev,
+    [e.target.name]: e.target.value,
+  }));
+};
+  const fetchProfile = async () => {
+  try {
+    const res = await api.get("/users/profile");
+console.log(res.data.data);
+    const data = res.data.data;
+
+setProfile(data);
+
+setForm({
+  name: data.name || "",
+  collegeName: data.collegeName || "",
+  bio: data.bio || "",
+});
+
+setListings(data.listings || []);
+
+  } catch (err) {
+    console.error(err);
+    setError("Failed to load profile.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+const handleSave = async () => {
+  try {
+    const res = await api.put("/users/profile", form);
+
+    setProfile(res.data.data);
+setEditing(false);
+    alert("Profile updated successfully!");
+
+  } catch (err) {
+    console.error(err);
+    alert("Couldn't update profile.");
+  }
+};
 
   const deleteListing = async (id) => {
     if (!window.confirm("Delete this listing?")) return;
@@ -111,11 +151,20 @@ justify-between
 
 <div>
 
-<h1 className="text-3xl font-bold">
-
-{profile.name}
-
-</h1>
+<input
+name="name"
+value={form.name}
+onChange={handleChange}
+className="
+mt-1
+w-full
+border-0
+bg-transparent
+text-3xl
+font-bold
+outline-none
+"
+/>
 
 <p className="text-slate-500">
 
@@ -123,31 +172,49 @@ justify-between
 
 </p>
 
-<p className="mt-2 text-sm text-slate-500">
+<input
+name="collegeName"
+value={form.collegeName}
+onChange={handleChange}
+placeholder="Your College"
+className="
+mt-3
+w-full
+rounded-xl
+border
+px-3
+py-2
+"
+/>
 
-🎓 {profile.collegeName || "Add your college"}
+<textarea
+name="bio"
+value={form.bio}
+onChange={handleChange}
+rows={4}
+placeholder="Tell others about yourself..."
+className="
+mt-4
+w-full
+rounded-xl
+border
+p-3
+resize-none
+"
+/>
 
-</p>
-
-{profile.bio && (
-
-<p className="mt-3 max-w-2xl text-slate-600">
-
-{profile.bio}
-
-</p>
-
-)}
+)
 
 </div>
 
 <Button
-variant="outline"
-className="rounded-xl"
+onClick={handleSave}
+className="
+rounded-xl
+px-6
+"
 >
-
-Edit Profile
-
+Save Changes
 </Button>
 
 </div>
