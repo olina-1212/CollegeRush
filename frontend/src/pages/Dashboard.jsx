@@ -58,61 +58,66 @@ function Dashboard() {
     };
     fetchListings();
   },[]);
- // FILTER LOGIC
-  const filteredListings = useMemo(()=>{
+ 
 
+      // FILTER LOGIC
+const filteredListings = useMemo(() => {
+  return listings.filter((item) => {
 
-    return listings.filter((item)=>{
+    // SEARCH
+    if (search.trim() !== "") {
+      const query = search.toLowerCase();
 
+      const matches =
+        item.title?.toLowerCase().includes(query) ||
+        item.description?.toLowerCase().includes(query) ||
+        item.category?.toLowerCase().includes(query) ||
+        (item.location || "").toLowerCase().includes(query) ||
+        item.type?.toLowerCase().includes(query);
 
+      if (!matches) return false;
+    }
 
-      if(
-        activeCategory !== "ALL" &&
-        item.category !== activeCategory
-      ){
+    // CATEGORY CHIPS
+    if (
+      activeCategory !== "ALL" &&
+      item.category !== activeCategory
+    ) {
+      return false;
+    }
 
-        return false;
+    // FILTER PANEL CATEGORY
+    if (
+      filters.category !== "ALL" &&
+      item.category !== filters.category
+    ) {
+      return false;
+    }
 
-      }
+    // TYPE
+    if (
+      filters.type !== "ALL" &&
+      item.type !== filters.type
+    ) {
+      return false;
+    }
 
-      if(
-        filters.type !== "ALL" &&
-        item.type !== filters.type
-      ){
+    // CONDITION
+    if (
+      filters.condition !== "ALL" &&
+      item.condition !== filters.condition
+    ) {
+      return false;
+    }
 
-        return false;
-      }
-      if(
-        filters.category !== "ALL" &&
-        item.category !== filters.category
-      ){
+    // PRICE
+    if (Number(item.price) > filters.price) {
+      return false;
+    }
 
-        return false;
-
-      }
-
-      if(
-        filters.condition !== "ALL" &&
-        item.condition !== filters.condition
-      ){
-
-        return false;
-
-      }
-      if(
-        Number(item.price) >
-        filters.price
-      ){
-        return false;
-      }
-      return true;
-    });
-
-  },[
-    listings,
-    filters,
-    activeCategory
-  ]);
+    return true;
+  });
+}, [listings, filters, activeCategory, search]);
   return (
 
     <AppShell

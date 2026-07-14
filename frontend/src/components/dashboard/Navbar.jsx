@@ -44,7 +44,7 @@ function Navbar({
 
         <Logo />
 
-        <div className="mx-10 hidden flex-1 lg:block">
+        <div className="mx-4 flex-1">
           <div className="relative">
             <Search
               size={18}
@@ -55,16 +55,7 @@ function Navbar({
   value={search}
   onChange={(e) => setSearch(e.target.value)}
   placeholder="Search books, notes, electronics..."
-  className="
-    h-12
-    rounded-2xl
-    border-0
-    bg-slate-100
-    pl-12
-    shadow-sm
-    focus-visible:ring-2
-    focus-visible:ring-blue-500
-  "
+  className="h-12 rounded-2xl border-0 bg-slate-100 pl-12 shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500"
 />
           </div>
         </div>
