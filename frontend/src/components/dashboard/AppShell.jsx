@@ -1,6 +1,10 @@
 import Navbar from "./Navbar";
 
-function AppShell({ children }) {
+function AppShell({
+  children,
+  search,
+  setSearch,
+}) {
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#f6faff]">
 
@@ -15,7 +19,10 @@ function AppShell({ children }) {
 
       </div>
 
-      <Navbar />
+      <Navbar
+  search={search}
+  setSearch={setSearch}
+/>
 
       <main className="mx-auto w-full max-w-[1550px] px-6 py-8 md:px-10 xl:px-14">
         {children}

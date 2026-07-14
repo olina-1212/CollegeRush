@@ -12,7 +12,10 @@ import Logo from "../Logo";
 import { Input } from "../ui/Input";
 import { Button } from "../ui/button";
 
-function Navbar() {
+function Navbar({
+  search,
+  setSearch,
+}) {
   const { pathname } = useLocation();
 
   const IconLink = ({ to, Icon, badge }) => (
@@ -49,9 +52,20 @@ function Navbar() {
             />
 
             <Input
-              placeholder="Search books, notes, electronics..."
-              className="h-12 rounded-2xl border-0 bg-slate-100 pl-12 shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500"
-            />
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+  placeholder="Search books, notes, electronics..."
+  className="
+    h-12
+    rounded-2xl
+    border-0
+    bg-slate-100
+    pl-12
+    shadow-sm
+    focus-visible:ring-2
+    focus-visible:ring-blue-500
+  "
+/>
           </div>
         </div>
 

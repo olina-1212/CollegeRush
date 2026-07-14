@@ -23,6 +23,7 @@ function Dashboard() {
   const [loading,setLoading] = useState(true);
   const [error,setError] = useState("");
   const [activeCategory,setActiveCategory] = useState("ALL");
+  const [search, setSearch] = useState("");
   const [filters,setFilters] = useState({
     type:"ALL",
     category:"ALL",
@@ -102,9 +103,7 @@ function Dashboard() {
         Number(item.price) >
         filters.price
       ){
-
         return false;
-
       }
       return true;
     });
@@ -116,7 +115,10 @@ function Dashboard() {
   ]);
   return (
 
-    <AppShell>
+    <AppShell
+  search={search}
+  setSearch={setSearch}
+>
 
       <div className="
         flex
@@ -125,34 +127,22 @@ function Dashboard() {
       ">
         {/* HEADER */}
         <div>
-
-
           <h1 className="
             text-2xl
             font-semibold
             tracking-tight
           ">
-
             Browse listings
-
           </h1>
-
           <p className="
             mt-1
             text-sm
             text-muted-foreground
           ">
-
             Fresh finds from students across campus.
-
           </p>
-
-
         </div>
         {/* CATEGORY CHIPS */}
-
-
-
         <div className="
           -mx-4
           flex
@@ -163,13 +153,8 @@ function Dashboard() {
           sm:mx-0
           sm:px-0
         ">
-
-
-
           {
             CATEGORIES.map((category)=>(
-
-
               <CategoryChip
 
                 key={category}
@@ -181,24 +166,16 @@ function Dashboard() {
                   :
                   category.replaceAll("_", " ")
                 }
-
-
                 active={
                   activeCategory === category
                 }
-
-
                 onClick={()=>
                   setActiveCategory(category)
                 }
-
               />
-
-
             ))
           }
         </div>
-
         <div className="
           flex
           gap-8
@@ -206,19 +183,15 @@ function Dashboard() {
           {/* FILTERS */}
           <div className="hidden w-80 shrink-0 lg:block">
             <FilterPanel
-
               filters={filters}
-
               setFilters={setFilters}
             />
           </div>
           {/* PRODUCTS */}
-
           <div className="
             min-w-0
             flex-1
           ">
-
             <div className="
               mb-4
               flex
@@ -229,53 +202,34 @@ function Dashboard() {
                 text-sm
                 text-muted-foreground
               ">
-
                 {filteredListings.length} results
-
               </p>
             </div>
             {
-
               loading ?
-
               (
-
                 <div className="
                   flex
                   justify-center
                   py-20
                   text-muted-foreground
                 ">
-
                   Loading listings...
-
                 </div>
-
               )
               :
               error ?
-
               (
-
                 <EmptyState
-
                   title="Something went wrong"
-
                   description={error}
-
                 />
-
               )
               :
-
               filteredListings.length===0 ?
-
               (
-
                 <EmptyState
-
                   title="No listings found"
-
                   description="
                     Try changing filters or add a new listing.
                   "
@@ -283,7 +237,6 @@ function Dashboard() {
               )
               :
               (
-
                 <div className="
                   grid
                   grid-cols-1
@@ -291,29 +244,16 @@ function Dashboard() {
                   sm:grid-cols-2
                   xl:grid-cols-3
                 ">
-
-
                   {
                     filteredListings.map((item)=>(
-
-
                       <ProductCard
-
                         key={item.id}
-
                         listing={item}
-
                       />
-
-
                     ))
                   }
-
                 </div>
-
               )
-
-
             }
 
           </div>
