@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import CreateListing from "./pages/CreateListing";
 import EditListing from "./pages/EditListing";
+import ListingDetails from "./pages/ListingDetails";
 
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
   <Route path="/create-listing" element={<CreateListing />} />
   <Route path="/edit-listing/:id" element={<EditListing />} />
   <Route path="/profile" element={<Profile />} />
+  <Route
+  path="/item/:id" element={<ListingDetails />} />
   
 </Routes>
     </BrowserRouter>
