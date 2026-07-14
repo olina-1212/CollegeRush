@@ -92,13 +92,17 @@ model Conversation {
   messages Message[]
 
   @@unique([buyerId, sellerId, listingId])
+
+  @@index([buyerId])
+
+@@index([sellerId])
 }
 
 model Message {
   id             String   @id @default(uuid())
   conversationId String
   senderId       String
-  content        String
+  text        String
   isRead         Boolean  @default(false)
   createdAt      DateTime @default(now())
 
