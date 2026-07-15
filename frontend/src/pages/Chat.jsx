@@ -30,7 +30,6 @@ function Chat() {
     try {
       const res = await api.get("/chat");
 
-      setConversations(res.data.data || []);
     } catch (err) {
       console.error(err);
     }
@@ -94,7 +93,7 @@ const fetchCurrentUser = async () => {
   // ---------------------------------------
 
   const openConversation = (conversationId) => {
-    navigate(`/chat/${conversationId}`);
+    navigate(`/messages/${conversationId}`)
   };
 
   // ---------------------------------------
@@ -102,8 +101,23 @@ const fetchCurrentUser = async () => {
   // ---------------------------------------
 
   useEffect(() => {
-  fetchCurrentUser();
-  fetchConversations();
+  const load = async () => {
+    await fetchCurrentUser();
+
+    const res = await api.get("/chat");
+
+    const chats = res.data.data || [];
+
+    setConversations(chats);
+
+    if (!id && chats.length > 0) {
+      navigate(`/messages/${chats[0].id}`, {
+        replace: true,
+      });
+    }
+  };
+
+  load();
 }, []);
 
   useEffect(() => {
