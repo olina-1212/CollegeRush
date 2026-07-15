@@ -129,10 +129,10 @@ export const sendMessage = async (
   const message = await prisma.message.create({
 
     data: {
-      conversationId,
-      senderId,
-      text,
-    },
+  conversationId,
+  senderId,
+  content: text,
+},
 
   });
 

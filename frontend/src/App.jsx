@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import CreateListing from "./pages/CreateListing";
 import EditListing from "./pages/EditListing";
 import ListingDetails from "./pages/ListingDetails";
+import Chat from "./pages/Chat";
 
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
   <Route path="/profile" element={<Profile />} />
   <Route
   path="/item/:id" element={<ListingDetails />} />
+  <Route path="/messages" element={<Chat />} />
+<Route path="/messages/:id" element={<Chat />} />
   
 </Routes>
     </BrowserRouter>

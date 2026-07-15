@@ -102,7 +102,7 @@ model Message {
   id             String   @id @default(uuid())
   conversationId String
   senderId       String
-  text        String
+  content        String
   isRead         Boolean  @default(false)
   createdAt      DateTime @default(now())
 
