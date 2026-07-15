@@ -4,10 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/apiClient";
 import AppShell from "../components/dashboard/AppShell";
 
-import ChatSidebar from "../components/chat/ChatSidebar";
-import ChatHeader from "../components/chat/ChatHeader";
-import ChatMessages from "../components/chat/ChatMessages";
-import MessageInput from "../components/chat/MessageInput";
+import ChatSidebar from "../components/ChatLayout/ChatSidebar";
+import ChatHeader from "../components/ChatLayout/ChatHeader";
+import ChatMessages from "../components/ChatLayout/ChatMessages";
+import MessageInput from "../components/ChatLayout/MessageInput";
 
 function Chat() {
   const { id } = useParams();
@@ -20,6 +20,7 @@ function Chat() {
   const [conversation, setConversation] = useState(null);
 
   const [message, setMessage] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
 
   // ---------------------------------------
   // LOAD ALL CONVERSATIONS
@@ -34,7 +35,15 @@ function Chat() {
       console.error(err);
     }
   };
+const fetchCurrentUser = async () => {
+  try {
+    const res = await api.get("/users/profile");
 
+    setCurrentUser(res.data.data);
+  } catch (err) {
+    console.error(err);
+  }
+};
   // ---------------------------------------
   // LOAD CURRENT CHAT
   // ---------------------------------------
@@ -93,8 +102,9 @@ function Chat() {
   // ---------------------------------------
 
   useEffect(() => {
-    fetchConversations();
-  }, []);
+  fetchCurrentUser();
+  fetchConversations();
+}, []);
 
   useEffect(() => {
     fetchConversation(id);
@@ -123,23 +133,24 @@ function Chat() {
             {/* Sidebar */}
 
             <ChatSidebar
-              conversations={conversations}
-              activeConversationId={id}
-              onSelectConversation={openConversation}
-            />
-
+    conversations={conversations}
+    currentUser={currentUser}
+    activeConversationId={id}
+    onSelectConversation={openConversation}
+/>
             {/* Chat Area */}
 
             <div className="flex min-h-0 flex-col">
 
               <ChatHeader
-                conversation={conversation}
-              />
-
+  conversation={conversation}
+  currentUser={currentUser}
+/>
               <ChatMessages
-                loading={loading}
-                conversation={conversation}
-              />
+    loading={loading}
+    conversation={conversation}
+    currentUser={currentUser}
+/>
 
               <MessageInput
                 value={message}

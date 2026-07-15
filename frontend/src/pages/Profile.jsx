@@ -259,7 +259,7 @@ Save Changes
           </h1>
 
           <p className="mt-2 text-slate-500">
-            Manage everything you've posted on CollegeRush.
+            Manage everything you've posted on CollegeSquare
           </p>
         </div>
 

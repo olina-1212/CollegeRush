@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   MapPin,
   Calendar,
@@ -16,7 +16,9 @@ import { Badge } from "../components/ui/badge";
 
 function ListingDetails() {
   const { id } = useParams();
+const navigate = useNavigate();
 
+const [startingChat, setStartingChat] = useState(false);
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
@@ -35,7 +37,26 @@ function ListingDetails() {
       setLoading(false);
     }
   };
+const startConversation = async () => {
+  try {
+    setStartingChat(true);
 
+    const res = await api.post("/chat/start", {
+      listingId: listing.id,
+    });
+
+    navigate(`/messages/${res.data.data.id}`);
+  } catch (err) {
+    console.error(err);
+
+    alert(
+      err.response?.data?.message ||
+        "Unable to start conversation."
+    );
+  } finally {
+    setStartingChat(false);
+  }
+};
   if (loading) {
     return (
       <AppShell>
@@ -402,25 +423,29 @@ group-hover:scale-[1.02]
                   {/* ACTION BUTTONS */}
 
                   <Button
-                    className="
-                    mt-10
-                    h-14
-                    w-full
-                    rounded-2xl
-                    bg-gradient-to-r
-                    from-blue-600
-                    to-indigo-600
-                    text-base
-                    font-semibold
-                    shadow-xl
-                    transition-all
-                    hover:scale-[1.02]
-                    hover:shadow-2xl
-                    "
-                  >
-                    <MessageCircle className="mr-3 h-5 w-5" />
-                    Contact Seller
-                  </Button>
+  onClick={startConversation}
+  disabled={startingChat}
+  className="
+  mt-10
+  h-14
+  w-full
+  rounded-2xl
+  bg-gradient-to-r
+  from-blue-600
+  to-indigo-600
+  text-base
+  font-semibold
+  shadow-xl
+  transition-all
+  hover:scale-[1.02]
+  hover:shadow-2xl
+  disabled:opacity-60
+  "
+>
+  <MessageCircle className="mr-3 h-5 w-5" />
+
+  {startingChat ? "Opening..." : "Contact Seller"}
+</Button>
 
                   <p className="mt-6 text-center text-sm leading-6 text-slate-500">
                     Always meet in a safe public place inside your campus.
