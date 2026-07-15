@@ -1,8 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
-
+import { initializeSocket } from "./socket/socket.js";
 import app from "./app.js";
 import { PrismaClient } from "@prisma/client";
+import { setIO } from "./socket/socketManager.js";
 
 const prisma = new PrismaClient();
 
@@ -33,15 +34,8 @@ export const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
-io.on("connection", (socket) => {
-  console.log("🟢 Connected:", socket.id);
-
-  socket.on("disconnect", () => {
-    console.log("🔴 Disconnected:", socket.id);
-  });
-});
-
+setIO(io);
+initializeSocket(io);
 server.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

@@ -1,5 +1,6 @@
 import * as chatService from "../services/chatService.js";
 import prisma from "../config/prisma.js";
+import { getIO } from "../socket/socketManager.js";
 
 export const startConversation = async (req, res) => {
   try {
@@ -101,12 +102,15 @@ export const sendMessage = async (req, res) => {
 
     const { text } = req.body;
 
-    const message =
-      await chatService.sendMessage(
-        req.params.id,
-        req.user.id,
-        text
-      );
+    const message = await chatService.sendMessage(
+  req.params.id,
+  req.user.id,
+  text
+);
+
+const io = getIO();
+
+io.to(req.params.id).emit("newMessage", message);
 
     return res.status(201).json({
       success: true,

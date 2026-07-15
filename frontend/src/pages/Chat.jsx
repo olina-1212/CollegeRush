@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
+import socket from "../socket/socket";
 import api from "../api/apiClient";
 import AppShell from "../components/dashboard/AppShell";
 
@@ -79,8 +79,6 @@ const fetchCurrentUser = async () => {
 
       setMessage("");
 
-      await fetchConversation(id);
-      await fetchConversations();
     } catch (err) {
       console.error(err);
     } finally {
@@ -99,8 +97,7 @@ const fetchCurrentUser = async () => {
   // ---------------------------------------
   // EFFECTS
   // ---------------------------------------
-
-  useEffect(() => {
+useEffect(() => {
   const load = async () => {
     await fetchCurrentUser();
 
@@ -117,12 +114,40 @@ const fetchCurrentUser = async () => {
     }
   };
 
-  load();
+  load(); // ✅ KEEP THIS
+
+  socket.connect();
+
+  return () => {
+    socket.disconnect();
+  };
 }, []);
 
-  useEffect(() => {
-    fetchConversation(id);
-  }, [id]);
+useEffect(() => {
+  if (!id) return;
+
+  fetchConversation(id);
+
+  socket.emit("joinConversation", id);
+
+  const handleNewMessage = (newMessage) => {
+    setConversation((prev) => {
+      if (!prev) return prev;
+
+      return {
+        ...prev,
+        messages: [...prev.messages, newMessage],
+      };
+    });
+  };
+
+  socket.on("newMessage", handleNewMessage);
+
+  return () => {
+    socket.off("newMessage", handleNewMessage);
+    socket.emit("leaveConversation", id);
+  };
+}, [id]);
     return (
     <AppShell>
       <div className="mx-auto max-w-7xl px-4 py-6">
