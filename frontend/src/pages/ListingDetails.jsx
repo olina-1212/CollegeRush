@@ -110,212 +110,276 @@ const startConversation = async () => {
 
         <div className="w-full max-w-[1700px] px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8 mx-auto">
 
-          <div className="grid gap-5 lg:gap-10 xl:grid-cols-[1.8fr_430px]">
+          <div className="grid gap-6 xl:grid-cols-[1.8fr_430px]">
 
             {/* LEFT */}
 
             <div>
 
-              {/* IMAGE CARD */}
+   {/* IMAGE CARD */}
 
-              <div
-className="
-group
-relative
-w-full
-max-w-full
-overflow-hidden
-rounded-[38px]
-bg-white
-shadow-[0_25px_80px_rgba(15,23,42,.12)]
-"
->
-
-                <img
-  src={images[activeImage]?.url}
-  alt={listing.title}
+<div
   className="
-block
-w-full
-max-w-full
-h-[260px]
-sm:h-[350px]
-md:h-[460px]
-xl:h-[520px]
-object-cover
-bg-slate-100
-transition-transform
-duration-700
-group-hover:scale-[1.02]
-"
-/>
+    group
+    relative
+    w-full
+    overflow-hidden
+    rounded-[24px]
+    sm:rounded-[30px]
+    xl:rounded-[38px]
+    bg-white
+    shadow-[0_25px_80px_rgba(15,23,42,.12)]
+  "
+>
+  <img
+    src={images[activeImage]?.url}
+    alt={listing.title}
+    className="
+      block
+      w-full
+      h-56
+      sm:h-72
+      md:h-[420px]
+      xl:h-[520px]
+      object-cover
+      bg-slate-100
+      transition-transform
+      duration-700
+      group-hover:scale-[1.02]
+    "
+  />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
+  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
-                <div className="absolute bottom-4 left-4 sm:bottom-8 sm:left-8">
+  <div className="absolute bottom-5 left-5 right-5 sm:bottom-8 sm:left-8 sm:right-8">
+    <div className="flex flex-wrap gap-2 sm:gap-3">
 
-                  <div className="flex flex-wrap gap-3">
+      <Badge
+        className="
+          rounded-full
+          bg-white/90
+          px-3
+          sm:px-5
+          py-1
+          text-xs
+          sm:text-sm
+          text-slate-900
+          backdrop-blur
+        "
+      >
+        {listing.type}
+      </Badge>
 
-                    <Badge className="rounded-full bg-white/90 px-5 py-1 text-slate-900 backdrop-blur">
-                      {listing.type}
-                    </Badge>
+      <Badge
+        variant="secondary"
+        className="
+          rounded-full
+          px-3
+          sm:px-5
+          py-1
+          text-xs
+          sm:text-sm
+        "
+      >
+        {listing.category}
+      </Badge>
 
-                    <Badge
-                      variant="secondary"
-                      className="rounded-full px-5 py-1"
-                    >
-                      {listing.category}
-                    </Badge>
+      <Badge
+        variant="outline"
+        className="
+          rounded-full
+          border-white
+          bg-white/20
+          px-3
+          sm:px-5
+          py-1
+          text-xs
+          sm:text-sm
+          text-white
+          backdrop-blur
+        "
+      >
+        {listing.condition.replaceAll("_", " ")}
+      </Badge>
 
-                    <Badge
-                      variant="outline"
-                      className="rounded-full border-white bg-white/20 px-5 py-1 text-white backdrop-blur"
-                    >
-                      {listing.condition.replaceAll("_", " ")}
-                    </Badge>
+    </div>
 
-                  </div>
+    <h1
+      className="
+        mt-4
+        sm:mt-6
+        max-w-full
+        sm:max-w-[90%]
+        break-words
+        text-2xl
+        sm:text-4xl
+        xl:text-5xl
+        font-black
+        leading-tight
+        text-white
+        drop-shadow-lg
+      "
+    >
+      {listing.title}
+    </h1>
+  </div>
 
-                  <h1 className="
-mt-3
-sm:mt-6
-max-w-[80%] sm:max-w-[90%]
-break-words
-text-2xl
-sm:text-4xl
-xl:text-5xl
-font-black
-leading-tight
-text-white
-drop-shadow-lg
-">
-                    {listing.title}
-                  </h1>
+  {images.length > 1 && (
+    <>
+      <button
+        onClick={() =>
+          setActiveImage((prev) =>
+            prev === 0 ? images.length - 1 : prev - 1
+          )
+        }
+        className="
+          absolute
+          left-3
+          sm:left-8
+          top-1/2
+          -translate-y-1/2
+          flex
+          h-9
+          w-9
+          sm:h-12
+          sm:w-12
+          items-center
+          justify-center
+          rounded-full
+          bg-white/90
+          shadow-xl
+          backdrop-blur
+          transition
+          hover:scale-110
+        "
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
 
-                </div>
+      <button
+        onClick={() =>
+          setActiveImage((prev) =>
+            prev === images.length - 1 ? 0 : prev + 1
+          )
+        }
+        className="
+          absolute
+          right-3
+          sm:right-8
+          top-1/2
+          -translate-y-1/2
+          flex
+          h-9
+          w-9
+          sm:h-12
+          sm:w-12
+          items-center
+          justify-center
+          rounded-full
+          bg-white/90
+          shadow-xl
+          backdrop-blur
+          transition
+          hover:scale-110
+        "
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+    </>
+  )}
+</div>
 
-                {images.length > 1 && (
-                  <>
-                    <button
-                      onClick={() =>
-                        setActiveImage((prev) =>
-                          prev === 0 ? images.length - 1 : prev - 1
-                        )
-                      }
-                      className="
-absolute
-left-2
-sm:left-8
-top-1/2
--translate-y-1/2
-flex
-h-10
-w-10
-sm:h-14
-sm:w-14
-items-center
-justify-center
-rounded-full
-bg-white/90
-shadow-xl
-backdrop-blur
-transition
-hover:scale-110
-"
-                    >
-                      <ChevronLeft />
-                    </button>
+{/* THUMBNAILS */}
 
-                    <button
-                      onClick={() =>
-                        setActiveImage((prev) =>
-                          prev === images.length - 1 ? 0 : prev + 1
-                        )
-                      }
-                     className="
-absolute
-right-2
-sm:right-8
-top-1/2
--translate-y-1/2
-flex
-h-10
-w-10
-sm:h-14
-sm:w-14
-items-center
-justify-center
-rounded-full
-bg-white/90
-shadow-xl
-backdrop-blur
-transition
-hover:scale-110
-"
-                    >
-                      <ChevronRight />
-                    </button>
-                  </>
-                )}
-              </div>
-                            {/* THUMBNAILS */}
+{images.length > 1 && (
+  <div
+    className="
+      mt-5
+      flex
+      gap-3
+      overflow-x-auto
+      pb-2
+      snap-x
+      snap-mandatory
+    "
+  >
+    {images.map((img, index) => (
+      <button
+        key={img.url || index}
+        onClick={() => setActiveImage(index)}
+        className={`
+          relative
+          h-16
+          w-20
+          sm:h-28
+          sm:w-32
+          shrink-0
+          snap-start
+          overflow-hidden
+          rounded-2xl
+          transition-all
+          duration-300
+          ${
+            activeImage === index
+              ? "scale-105 ring-4 ring-blue-500 shadow-xl"
+              : "opacity-80 hover:opacity-100 hover:scale-105"
+          }
+        `}
+      >
+        <img
+          src={img.url}
+          alt={`Thumbnail ${index + 1}`}
+          className="
+            h-full
+            w-full
+            object-cover
+            transition-transform
+            duration-500
+            hover:scale-110
+          "
+        />
 
-              {images.length > 1 && (
-                <div className="mt-8 flex gap-5 max-w-full pb-2">
-                  {images.map((img, index) => (
-                    <button
-                      key={img.url || index}
-                      onClick={() => setActiveImage(index)}
-                      className={`
-                        relative
-                        h-20
-w-24
-sm:h-28
-sm:w-32
-                        shrink-0
-                        overflow-hidden
-                        rounded-3xl
-                        transition-all
-                        duration-300
-                        ${
-                          activeImage === index
-                            ? "scale-105 ring-4 ring-blue-500 shadow-2xl"
-                            : "opacity-80 hover:scale-105 hover:opacity-100"
-                        }
-                      `}
-                    >
-                      <img
-                        src={img.url}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="h-full w-full object-cover transition duration-500 hover:scale-110"
-                      />
+        {activeImage === index && (
+          <div className="absolute inset-0 rounded-2xl border-2 border-white" />
+        )}
+      </button>
+    ))}
+  </div>
+)}
+             {/* PRODUCT INFO */}
 
-                      {activeImage === index && (
-                        <div className="absolute inset-0 rounded-3xl border-2 border-white"></div>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
+<div className="mt-6 sm:mt-8 rounded-[24px] sm:rounded-[28px] bg-white p-5 sm:p-7 shadow-lg">
 
-              {/* PRODUCT INFO */}
-<div className="mt-8 rounded-[28px] bg-white p-4 sm:p-7 shadow-lg">
+  <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
 
-  <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+    {/* DESCRIPTION */}
 
-    <div className="flex-1">
+    <div className="flex-1 min-w-0">
 
-      <h2 className="text-2xl font-bold text-slate-900">
+      <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
         Description
       </h2>
 
-      <p className="mt-5 whitespace-pre-wrap text-[16px] leading-8 text-slate-600">
+      <p
+        className="
+          mt-4
+          whitespace-pre-wrap
+          break-words
+          text-[15px]
+          leading-7
+          sm:text-base
+          sm:leading-8
+          text-slate-600
+        "
+      >
         {listing.description}
       </p>
 
     </div>
 
-    <div className="flex flex-wrap gap-3">
+    {/* CATEGORY + CONDITION */}
+
+    <div className="grid grid-cols-2 gap-3 lg:w-[240px] shrink-0">
 
       <div className="rounded-2xl bg-slate-100 px-4 py-3">
 
@@ -323,7 +387,7 @@ sm:w-32
           Category
         </p>
 
-        <p className="mt-1 font-semibold text-slate-900">
+        <p className="mt-1 break-words font-semibold text-slate-900">
           {listing.category}
         </p>
 
@@ -335,7 +399,7 @@ sm:w-32
           Condition
         </p>
 
-        <p className="mt-1 font-semibold text-slate-900">
+        <p className="mt-1 break-words font-semibold text-slate-900">
           {(listing.condition || "").replaceAll("_", " ")}
         </p>
 
@@ -345,21 +409,33 @@ sm:w-32
 
   </div>
 
-  <div className="mt-8 flex flex-wrap gap-4">
+  {/* LOCATION + DATE */}
 
-    <div className="flex items-center gap-3 rounded-2xl bg-slate-50 px-5 py-3">
+  <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100">
+    <div
+      className="
+        flex
+        items-center
+        gap-3
+        rounded-2xl
+        bg-slate-50
+        px-4
+        py-3
+      "
+    >
+
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-100">
         <MapPin size={18} className="text-blue-600" />
       </div>
 
-      <div>
+      <div className="min-w-0">
 
         <p className="text-xs text-slate-500">
           College
         </p>
 
-        <p className="font-semibold text-slate-900">
+        <p className="break-words font-semibold text-slate-900">
           {listing.location || "Campus"}
         </p>
 
@@ -367,13 +443,23 @@ sm:w-32
 
     </div>
 
-    <div className="flex items-center gap-3 rounded-2xl bg-slate-50 px-5 py-3">
+    <div
+      className="
+        flex
+        items-center
+        gap-3
+        rounded-2xl
+        bg-slate-50
+        px-4
+        py-3
+      "
+    >
 
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100">
         <Calendar size={18} className="text-emerald-600" />
       </div>
 
-      <div>
+      <div className="min-w-0">
 
         <p className="text-xs text-slate-500">
           Listed On
@@ -387,8 +473,10 @@ sm:w-32
 
     </div>
 
-</div></div></div>
-           {/* RIGHT SIDEBAR */}
+  </div>
+
+</div></div>
+          {/* RIGHT SIDEBAR */}
 
 <div>
 
@@ -396,15 +484,17 @@ sm:w-32
 
     <div
       className="
-      overflow-hidden
-      rounded-[28px]
-      border
-      border-white/40
-      bg-white/80
-      p-5
-      sm:p-7
-      shadow-[0_20px_60px_rgba(15,23,42,.10)]
-      backdrop-blur-xl
+        overflow-hidden
+        rounded-[24px]
+        sm:rounded-[28px]
+        border
+        border-white/40
+        bg-white/80
+        p-5
+        sm:p-6
+        lg:p-7
+        shadow-[0_20px_60px_rgba(15,23,42,.10)]
+        backdrop-blur-xl
       "
     >
 
@@ -412,37 +502,54 @@ sm:w-32
 
       <div
         className="
-        rounded-[24px]
-        bg-gradient-to-br
-        from-blue-600
-        via-indigo-600
-        to-violet-600
-        p-5
-        sm:p-7
-        text-white
-        shadow-xl
+          rounded-[22px]
+          sm:rounded-[24px]
+          bg-gradient-to-br
+          from-blue-600
+          via-indigo-600
+          to-violet-600
+          p-5
+          sm:p-6
+          text-white
+          shadow-xl
         "
       >
 
-        <p className="text-[11px] uppercase tracking-[0.25em] text-blue-100">
+        <p
+          className="
+            text-[10px]
+            sm:text-[11px]
+            uppercase
+            tracking-[0.25em]
+            text-blue-100
+          "
+        >
           Asking Price
         </p>
 
-
         <h2
           className="
-          mt-2
-          text-4xl
-          sm:text-5xl
-          font-black
-          tracking-tight
+            mt-2
+            break-words
+            text-3xl
+            sm:text-4xl
+            lg:text-5xl
+            font-black
+            leading-none
+            tracking-tight
           "
         >
           ₹{listing.price}
         </h2>
 
-
-        <p className="mt-2 text-sm text-blue-100">
+        <p
+          className="
+            mt-3
+            text-xs
+            sm:text-sm
+            text-blue-100
+          "
+        >
           Fair price • Negotiable
         </p>
 
@@ -452,146 +559,139 @@ sm:w-32
 
       {/* SELLER */}
 
-      <div
+<div
+  className="
+    mt-6
+    rounded-[24px]
+    bg-gradient-to-br
+    from-slate-900
+    via-slate-800
+    to-slate-900
+    p-5
+    sm:p-6
+    text-white
+    overflow-hidden
+  "
+>
+  <p
+    className="
+      text-[10px]
+      uppercase
+      tracking-[0.3em]
+      text-slate-400
+    "
+  >
+    Seller
+  </p>
+
+  <div
+    className="
+      mt-5
+      flex
+      items-center
+      gap-4
+      min-w-0
+    "
+  >
+    <img
+      src={
+        listing.seller?.avatarUrl ||
+        `https://ui-avatars.com/api/?background=2563eb&color=fff&size=256&name=${encodeURIComponent(
+          listing.seller?.name || "User"
+        )}`
+      }
+      alt={listing.seller?.name}
+      className="
+        h-14
+        w-14
+        sm:h-16
+        sm:w-16
+        shrink-0
+        rounded-full
+        border-2
+        border-white/80
+        object-cover
+        shadow-lg
+      "
+    />
+
+    <div className="flex-1 min-w-0">
+      <h3
         className="
-        mt-6
-        rounded-[24px]
-        bg-gradient-to-br
-        from-slate-900
-        via-slate-800
-        to-slate-900
-        p-5
-        sm:p-6
-        text-white
+          text-lg
+          sm:text-xl
+          font-bold
+          leading-tight
+          break-words
         "
       >
-
-        <p
-          className="
-          text-[10px]
-          uppercase
-          tracking-[0.3em]
-          text-slate-400
-          "
-        >
-          Seller
-        </p>
-
-
-        <div
-          className="
-          mt-5
-          flex
-          items-center
-          gap-4
-          "
-        >
-
-          <img
-            src={
-              listing.seller?.avatarUrl ||
-              "https://ui-avatars.com/api/?background=2563eb&color=fff&size=256&name=" +
-                encodeURIComponent(listing.seller?.name || "User")
-            }
-            alt={listing.seller?.name}
-            className="
-            h-14
-            w-14
-            sm:h-16
-            sm:w-16
-            shrink-0
-            rounded-full
-            border-2
-            border-white/80
-            object-cover
-            shadow-lg
-            "
-          />
-
-
-          <div className="min-w-0">
-
-            <h3
-              className="
-              truncate
-              text-lg
-              sm:text-xl
-              font-bold
-              "
-            >
-              {listing.seller?.name}
-            </h3>
-
-
-            <p
-              className="
-              mt-1
-              truncate
-              text-sm
-              text-slate-300
-              "
-            >
-              {listing.seller?.collegeName ||
-                "CollegeSquare User"}
-            </p>
-
-
-          </div>
-
-
-        </div>
-
-
-      </div>
-
-
-
-      {/* CONTACT BUTTON */}
-
-      <Button
-        onClick={startConversation}
-        disabled={startingChat}
-        className="
-        mt-6
-        h-12
-        sm:h-14
-        w-full
-        rounded-2xl
-        bg-gradient-to-r
-        from-blue-600
-        to-indigo-600
-        text-sm
-        sm:text-base
-        font-semibold
-        shadow-xl
-        transition-all
-        hover:scale-[1.02]
-        hover:shadow-2xl
-        disabled:opacity-60
-        "
-      >
-
-        <MessageCircle className="mr-2 h-5 w-5" />
-
-        {startingChat ? "Opening..." : "Contact Seller"}
-
-      </Button>
-
-
+        {listing.seller?.name}
+      </h3>
 
       <p
         className="
-        mt-5
-        text-center
-        text-xs
-        sm:text-sm
-        leading-5
-        text-slate-500
+          mt-1
+          text-sm
+          leading-5
+          text-slate-300
+          break-words
         "
       >
-        Meet safely inside your campus.
-        Verify products before payment.
+        {listing.seller?.collegeName || "CollegeSquare User"}
       </p>
+    </div>
+  </div>
+</div>
+
+{/* CONTACT BUTTON */}
+
+<Button
+  onClick={startConversation}
+  disabled={startingChat}
+  className="
+    mt-6
+    h-12
+    sm:h-14
+    w-full
+    rounded-2xl
+    bg-gradient-to-r
+    from-blue-600
+    to-indigo-600
+    text-sm
+    sm:text-base
+    font-semibold
+    shadow-lg
+    transition-all
+    duration-300
+    hover:shadow-xl
+    hover:scale-[1.02]
+    disabled:opacity-60
+    disabled:cursor-not-allowed
+  "
+>
+  <MessageCircle className="mr-2 h-5 w-5 shrink-0" />
+
+  <span className="truncate">
+    {startingChat ? "Opening..." : "Contact Seller"}
+  </span>
+</Button>
+
+<p
+  className="
+    mt-5
+    px-1
+    text-center
+    text-xs
+    sm:text-sm
+    leading-5
+    text-slate-500
+  "
+>
+  Meet safely inside your campus.
+  <br className="sm:hidden" />
+  <span className="hidden sm:inline"> </span>
+  Verify products before payment.
+</p>
 
 
     </div>
