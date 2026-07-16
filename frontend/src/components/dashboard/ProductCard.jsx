@@ -28,7 +28,7 @@ function ProductCard({ listing }) {
 
   return (
     <Card
-  oonClick={() => navigate(`/item/${listing.id}`)}
+  onClick={() => navigate(`/item/${listing.id}`)}
   className="
     group
     cursor-pointer
