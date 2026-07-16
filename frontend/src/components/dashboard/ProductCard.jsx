@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  MapPin,
-  Clock3,
   ArrowRight,
 } from "lucide-react";
 
@@ -30,7 +28,7 @@ function ProductCard({ listing }) {
 
   return (
     <Card
-  onClick={() => navigate(`/listing/${listing.id}`)}
+  oonClick={() => navigate(`/item/${listing.id}`)}
   className="
     group
     cursor-pointer
@@ -101,21 +99,6 @@ sm:h-48
           {listing.description}
         </p>
 
-        {/* Location + Condition */}
-
-        <div className="flex items-center justify-between text-sm text-slate-500">
-
-          <div className="flex items-center gap-1">
-            <MapPin size={15} />
-            {listing.location || "Campus"}
-          </div>
-
-          <div className="flex items-center gap-1">
-            <Clock3 size={15} />
-            {listing.condition}
-          </div>
-
-        </div>
 
         {/* Bottom */}
 

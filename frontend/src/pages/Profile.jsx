@@ -544,7 +544,7 @@ lg:w-56 shrink-0">
         {/* BUTTONS */}
         <div className="mt-5 grid grid-cols-1 gap-2 sm:flex">
 
-          <Link to={`/listing/${listing.id}`}>
+         <Link to={`/item/${listing.id}`}>
             <Button className="h-10 w-full rounded-xl px-4 text-sm sm:h-9 sm:w-auto">
               <Eye className="mr-2 h-4 w-4" />
               View
@@ -554,7 +554,10 @@ lg:w-56 shrink-0">
          <Button
   variant="outline"
   className="h-10 w-full rounded-xl px-4 text-sm sm:h-9 sm:w-auto"
-  onClick={() => navigate(`/edit-listing/${listing.id}`)}
+onClick={(e) => {
+  e.stopPropagation();
+  navigate(`/edit-listing/${listing.id}`);
+}}
 >
   Edit
 </Button>
@@ -562,7 +565,10 @@ lg:w-56 shrink-0">
           <Button
             variant="destructive"
             className="h-10 w-full rounded-xl px-4 text-sm sm:h-9 sm:w-auto"
-            onClick={() => deleteListing(listing.id)}
+            onClick={(e) => {
+  e.stopPropagation();
+  deleteListing(listing.id);
+}}
           >
             <Trash2 className="mr-2 h-4 w-4" />
             Delete
