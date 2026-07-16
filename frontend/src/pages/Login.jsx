@@ -12,13 +12,22 @@ import {
 
 import { GoogleLogin } from "@react-oauth/google";
 import api from "../api/apiClient";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 
 function Login() {
 
   const navigate = useNavigate();
+useEffect(() => {
+  const token = localStorage.getItem("token");
 
+  if (token) {
+    navigate("/dashboard", {
+      replace: true,
+    });
+  }
+}, [navigate]);
 
   const handleGoogleSuccess = async (response) => {
   try {

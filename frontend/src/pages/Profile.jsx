@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
+import { LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
   Trash2,
@@ -76,8 +78,14 @@ setEditing(false);
     alert("Couldn't update profile.");
   }
 };
+ const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 
+  navigate("/");
+};
   const deleteListing = async (id) => {
+   
     if (!window.confirm("Delete this listing?")) return;
 
     try {
@@ -254,30 +262,48 @@ const stats = useMemo(() => {
         </div>
 
         {/* Save Button */}
-        <Button
-          onClick={handleSave}
-          className="
-            h-10
-            w-full
-            rounded-xl
-            px-5
-            text-sm
-            sm:h-11
-            sm:w-auto
-            sm:px-6
-          "
-        >
-          Save Changes
-        </Button>
+        <div className="flex w-full gap-3 sm:w-auto">
+  <Button
+    onClick={handleSave}
+    className="
+      h-10
+      flex-1
+      rounded-xl
+      px-5
+      text-sm
+      sm:h-11
+      sm:flex-none
+      sm:px-6
+    "
+  >
+    Save Changes
+  </Button>
+
+  <Button
+    variant="outline"
+    onClick={handleLogout}
+    className="
+      h-10
+      rounded-xl
+      px-4
+      border-red-200
+      text-red-600
+      hover:bg-red-50
+      sm:h-11
+    "
+  >
+    <LogOut className="h-4 w-4" />
+  </Button>
+</div>
       </div>
     </div>
   </div>
 )}
 
-      <div className="flex items-end justify-between mb-10">
+      <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
 
         <div>
-          <h1 className="text-4xl font-bold tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
             My Listings
           </h1>
 
@@ -309,7 +335,7 @@ const stats = useMemo(() => {
       {!loading && !error && (
         <>
 
-<div className="grid grid-cols-3 gap-3 md:grid-cols-3 md:gap-7">
+<div className="grid grid-cols-3 gap-2 sm:gap-6 md:gap-7">
   {[
     {
       title: "Total",
@@ -517,7 +543,7 @@ lg:w-56 shrink-0">
         </div>
 
         {/* BUTTONS */}
-        <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+        <div className="mt-5 grid grid-cols-1 gap-2 sm:flex">
 
           <Link to={`/listing/${listing.id}`}>
             <Button className="h-10 w-full rounded-xl px-4 text-sm sm:h-9 sm:w-auto">
