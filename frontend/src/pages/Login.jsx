@@ -23,12 +23,9 @@ function Login() {
   const handleGoogleSuccess = async (response) => {
   try {
 
-    const res = await axios.post(
-      "http://localhost:5000/api/auth/google",
-      {
-        token: response.credential,
-      }
-    );
+  const res = await api.post("/auth/google", {
+  token: response.credential,
+});
 
     localStorage.setItem(
       "token",
@@ -41,9 +38,6 @@ function Login() {
       JSON.stringify(res.data.user)
     );
     navigate("/dashboard");
-    console.log("FULL RESPONSE:", res.data);
-console.log("TOKEN:", res.data.token);
-console.log("USER:", res.data.user);
 
   } catch(error) {
 

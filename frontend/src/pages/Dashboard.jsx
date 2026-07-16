@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import axios from "axios";
+import api from "../api/apiClient";
 
 import AppShell from "../components/dashboard/AppShell";
 import CategoryChip from "../components/dashboard/CategoryChip";
@@ -33,33 +33,22 @@ function Dashboard() {
     condition:"ALL",
   });
   // FETCH LISTINGS
-  useEffect(()=>{
-    const fetchListings = async()=>{
-      try{
-        const res = await axios.get(
-          "http://localhost:5000/api/listings"
-        );
-        setListings(
-          res.data.data || []
-        );
-      }
-      catch(err){
-        console.error(err);
-        setError(
-          "Failed to load listings"
-        );
+  useEffect(() => {
+  const fetchListings = async () => {
+    try {
+      const res = await api.get("/listings");
 
+      setListings(res.data.data || []);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load listings");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      }
-
-      finally{
-
-        setLoading(false);
-
-      }
-    };
-    fetchListings();
-  },[]);
+  fetchListings();
+}, []);
  
 
       // FILTER LOGIC

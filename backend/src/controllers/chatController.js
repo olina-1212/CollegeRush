@@ -2,6 +2,10 @@ import * as chatService from "../services/chatService.js";
 import prisma from "../config/prisma.js";
 import { getIO } from "../socket/socketManager.js";
 
+// -------------------------------------
+// START CONVERSATION
+// -------------------------------------
+
 export const startConversation = async (req, res) => {
   try {
     const buyerId = req.user.id;
@@ -48,11 +52,13 @@ export const startConversation = async (req, res) => {
   }
 };
 
+// -------------------------------------
+// GET SINGLE CONVERSATION
+// -------------------------------------
+
 export const getConversation = async (req, res) => {
   try {
-
-    const conversation =
-      await chatService.getConversation(req.params.id);
+    const conversation = await chatService.getConversation(req.params.id);
 
     if (!conversation) {
       return res.status(404).json({
@@ -61,7 +67,18 @@ export const getConversation = async (req, res) => {
       });
     }
 
-    return res.json({
+    // Authorization
+    if (
+      conversation.buyerId !== req.user.id &&
+      conversation.sellerId !== req.user.id
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    return res.status(200).json({
       success: true,
       data: conversation,
     });
@@ -76,13 +93,15 @@ export const getConversation = async (req, res) => {
   }
 };
 
+// -------------------------------------
+// GET ALL MY CONVERSATIONS
+// -------------------------------------
+
 export const getMyConversations = async (req, res) => {
   try {
+    const conversations = await chatService.getMyConversations(req.user.id);
 
-    const conversations =
-      await chatService.getMyConversations(req.user.id);
-
-    return res.json({
+    return res.status(200).json({
       success: true,
       data: conversations,
     });
@@ -97,20 +116,50 @@ export const getMyConversations = async (req, res) => {
   }
 };
 
+// -------------------------------------
+// SEND MESSAGE
+// -------------------------------------
+
 export const sendMessage = async (req, res) => {
   try {
-
     const { text } = req.body;
 
+    if (!text || !text.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: "Message cannot be empty",
+      });
+    }
+
+    const conversation = await chatService.getConversation(req.params.id);
+
+    if (!conversation) {
+      return res.status(404).json({
+        success: false,
+        message: "Conversation not found",
+      });
+    }
+
+    // Authorization
+    if (
+      conversation.buyerId !== req.user.id &&
+      conversation.sellerId !== req.user.id
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
     const message = await chatService.sendMessage(
-  req.params.id,
-  req.user.id,
-  text
-);
+      req.params.id,
+      req.user.id,
+      text.trim()
+    );
 
-const io = getIO();
+    const io = getIO();
 
-io.to(req.params.id).emit("newMessage", message);
+    io.to(req.params.id).emit("newMessage", message);
 
     return res.status(201).json({
       success: true,

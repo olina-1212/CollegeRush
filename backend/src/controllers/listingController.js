@@ -7,7 +7,6 @@ import streamifier from "streamifier";
 export const createListing = async (req, res) => {
   try {
     const validatedData = listingSchema.parse(req.body);
-console.log("FILES:", req.files);
     const uploadedImages = [];
 
     if (req.files && req.files.length > 0) {

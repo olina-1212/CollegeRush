@@ -43,7 +43,6 @@ function MyListings() {
   const fetchProfile = async () => {
   try {
     const res = await api.get("/users/profile");
-console.log(res.data.data);
     const data = res.data.data;
 
 setProfile(data);
