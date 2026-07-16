@@ -6,6 +6,7 @@ import CategoryChip from "../components/dashboard/CategoryChip";
 import ProductCard from "../components/dashboard/ProductCard";
 import FilterPanel from "../components/dashboard/FilterPanel";
 import EmptyState from "../components/dashboard/EmptyState";
+import { SlidersHorizontal, X } from "lucide-react";
 
 
 const CATEGORIES = [
@@ -23,6 +24,7 @@ function Dashboard() {
   const [loading,setLoading] = useState(true);
   const [error,setError] = useState("");
   const [activeCategory,setActiveCategory] = useState("ALL");
+  const [showFilters, setShowFilters] = useState(false);
   const [search, setSearch] = useState("");
   const [filters,setFilters] = useState({
     type:"ALL",
@@ -148,122 +150,162 @@ const filteredListings = useMemo(() => {
           </p>
         </div>
         {/* CATEGORY CHIPS */}
-        <div className="
-          -mx-4
+       {/* CATEGORY CHIPS */}
+<div
+  className="
+    -mx-4
+    flex
+    items-center
+    gap-2
+    overflow-x-auto
+    px-4
+    pb-2
+    sm:mx-0
+    sm:px-0
+  "
+>
+  {CATEGORIES.map((category) => (
+    <CategoryChip
+      key={category}
+      label={
+        category === "ALL"
+          ? "All"
+          : category.replaceAll("_", " ")
+      }
+      active={activeCategory === category}
+      onClick={() => setActiveCategory(category)}
+    />
+  ))}
+</div>
+
+<div className="flex gap-8">
+
+  {/* Desktop Filters */}
+  <div className="hidden w-80 shrink-0 lg:block">
+    <FilterPanel
+      filters={filters}
+      setFilters={setFilters}
+    />
+  </div>
+
+  {/* Products */}
+  <div className="min-w-0 flex-1">
+
+    {/* Top Bar */}
+    <div className="mb-4 flex items-center justify-between">
+
+      <p className="text-sm text-muted-foreground">
+        {filteredListings.length} results
+      </p>
+
+      {/* Mobile Filter Button */}
+      <button
+        onClick={() => setShowFilters(true)}
+        className="
           flex
+          items-center
           gap-2
-          overflow-x-auto
-          px-4
-          pb-2
-          sm:mx-0
-          sm:px-0
-        ">
-          {
-            CATEGORIES.map((category)=>(
-              <CategoryChip
+          rounded-xl
+          border
+          bg-white
+          px-3
+          py-2
+          text-sm
+          shadow-sm
+          lg:hidden
+        "
+      >
+        <SlidersHorizontal size={18} />
+        Filter
+      </button>
 
-                key={category}
+    </div>
 
-                label={
-                  category === "ALL"
-                  ?
-                  "All"
-                  :
-                  category.replaceAll("_", " ")
-                }
-                active={
-                  activeCategory === category
-                }
-                onClick={()=>
-                  setActiveCategory(category)
-                }
-              />
-            ))
-          }
-        </div>
-        <div className="
-          flex
-          gap-8
-        ">
-          {/* FILTERS */}
-          <div className="hidden w-80 shrink-0 lg:block">
-            <FilterPanel
-              filters={filters}
-              setFilters={setFilters}
-            />
-          </div>
-          {/* PRODUCTS */}
-          <div className="
-            min-w-0
-            flex-1
-          ">
-            <div className="
-              mb-4
-              flex
-              justify-between
-              items-center
-            ">
-              <p className="
-                text-sm
-                text-muted-foreground
-              ">
-                {filteredListings.length} results
-              </p>
-            </div>
-            {
-              loading ?
-              (
-                <div className="
-                  flex
-                  justify-center
-                  py-20
-                  text-muted-foreground
-                ">
-                  Loading listings...
-                </div>
-              )
-              :
-              error ?
-              (
-                <EmptyState
-                  title="Something went wrong"
-                  description={error}
-                />
-              )
-              :
-              filteredListings.length===0 ?
-              (
-                <EmptyState
-                  title="No listings found"
-                  description="
-                    Try changing filters or add a new listing.
-                  "
-                />
-              )
-              :
-              (
-                <div className="
-                  grid
-                  grid-cols-1
-                  gap-5
-                  sm:grid-cols-2
-                  xl:grid-cols-3
-                ">
-                  {
-                    filteredListings.map((item)=>(
-                      <ProductCard
-                        key={item.id}
-                        listing={item}
-                      />
-                    ))
-                  }
-                </div>
-              )
-            }
+    {/* Mobile Filter Drawer */}
+    {showFilters && (
+      <div
+        className="
+          fixed
+          inset-0
+          z-50
+          bg-black/40
+          lg:hidden
+        "
+      >
+        <div
+          className="
+            absolute
+            right-0
+            top-0
+            h-full
+            w-[85%]
+            max-w-sm
+            overflow-y-auto
+            bg-white
+            p-5
+            shadow-2xl
+          "
+        >
+          <div className="mb-5 flex items-center justify-between">
+
+            <h2 className="text-lg font-semibold">
+              Filters
+            </h2>
+
+            <button
+              onClick={() => setShowFilters(false)}
+            >
+              <X size={24} />
+            </button>
 
           </div>
 
+          <FilterPanel
+            filters={filters}
+            setFilters={setFilters}
+          />
         </div>
+      </div>
+    )}
+
+    {/* Listings */}
+
+    {loading ? (
+      <div className="flex justify-center py-20 text-muted-foreground">
+        Loading listings...
+      </div>
+    ) : error ? (
+      <EmptyState
+        title="Something went wrong"
+        description={error}
+      />
+    ) : filteredListings.length === 0 ? (
+      <EmptyState
+        title="No listings found"
+        description="Try changing filters or add a new listing."
+      />
+    ) : (
+      <div
+        className="
+          grid
+          grid-cols-2
+          gap-3
+          sm:grid-cols-2
+          lg:grid-cols-3
+          xl:grid-cols-4
+        "
+      >
+        {filteredListings.map((item) => (
+          <ProductCard
+            key={item.id}
+            listing={item}
+          />
+        ))}
+      </div>
+    )}
+
+  </div>
+</div>
       </div>
     </AppShell>
   );

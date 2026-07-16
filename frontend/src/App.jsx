@@ -8,25 +8,82 @@ import EditListing from "./pages/EditListing";
 import ListingDetails from "./pages/ListingDetails";
 import Chat from "./pages/Chat";
 
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
-
   return (
     <BrowserRouter>
+      <Routes>
 
-  <Routes>
-  <Route path="/" element={<Login />} />
-  <Route path="/login" element={<Login />} />
-  <Route path="/dashboard" element={<Dashboard />} />
-  <Route path="/create-listing" element={<CreateListing />} />
-  <Route path="/edit-listing/:id" element={<EditListing />} />
-  <Route path="/profile" element={<Profile />} />
-  <Route
-  path="/item/:id" element={<ListingDetails />} />
-  <Route path="/messages" element={<Chat />} />
-<Route path="/messages/:id" element={<Chat />} />
-  
-</Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+
+        {/* Protected Routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/create-listing"
+          element={
+            <ProtectedRoute>
+              <CreateListing />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edit-listing/:id"
+          element={
+            <ProtectedRoute>
+              <EditListing />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/item/:id"
+          element={
+            <ProtectedRoute>
+              <ListingDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/messages"
+          element={
+            <ProtectedRoute>
+              <Chat />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/messages/:id"
+          element={
+            <ProtectedRoute>
+              <Chat />
+            </ProtectedRoute>
+          }
+        />
+
+      </Routes>
     </BrowserRouter>
   );
 }

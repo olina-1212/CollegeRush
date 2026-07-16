@@ -103,154 +103,178 @@ const stats = useMemo(() => {
   return (
     <AppShell>
 
-      {profile && (
+{profile && (
+  <div
+    className="
+      mb-6
+      overflow-hidden
+      rounded-2xl
+      bg-white
+      shadow-xl
+      sm:mb-10
+      sm:rounded-[32px]
+    "
+  >
+    {/* Cover */}
+    <div
+      className="
+        h-24
+        bg-gradient-to-r
+        from-blue-600
+        via-indigo-500
+        to-cyan-400
+        sm:h-36
+      "
+    />
 
-<div className="
-mb-10
-overflow-hidden
-rounded-[32px]
-bg-white
-shadow-xl
-">
+    <div
+      className="
+        relative
+        px-4
+        pb-5
+        sm:px-8
+        sm:pb-8
+      "
+    >
+      {/* Avatar */}
+      <img
+        src={profile.avatarUrl}
+        alt={profile.name}
+        className="
+          -mt-10
+          h-20
+          w-20
+          rounded-full
+          border-4
+          border-white
+          object-cover
+          shadow-xl
+          sm:-mt-14
+          sm:h-28
+          sm:w-28
+        "
+      />
 
-<div className="
-h-36
-bg-gradient-to-r
-from-blue-600
-via-indigo-500
-to-cyan-400
-"/>
+      <div
+        className="
+          mt-4
+          flex
+          flex-col
+          gap-5
+          sm:mt-5
+          sm:flex-row
+          sm:items-start
+          sm:justify-between
+        "
+      >
+        {/* Left */}
+        <div className="flex-1">
+          <input
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            className="
+              w-full
+              rounded-xl
+              bg-transparent
+              px-2
+              py-1
+              text-2xl
+              font-bold
+              text-slate-900
+              outline-none
+              transition-all
+              duration-200
+              hover:bg-slate-50
+              focus:bg-slate-50
+              focus:ring-2
+              focus:ring-blue-200
+              sm:text-3xl
+            "
+          />
 
-<div className="
-relative
-px-8
-pb-8
-">
+          <p className="mt-1 text-sm text-slate-500 break-all">
+            {profile.email}
+          </p>
 
-<img
-src={profile.avatarUrl}
-alt={profile.name}
-className="
--mt-14
-h-28
-w-28
-rounded-full
-border-4
-border-white
-object-cover
-shadow-xl
-"
-/>
+          <input
+            name="collegeName"
+            value={form.collegeName}
+            onChange={handleChange}
+            placeholder="Your College"
+            className="
+              mt-4
+              w-full
+              rounded-xl
+              bg-slate-50
+              px-4
+              py-2.5
+              text-sm
+              font-medium
+              text-slate-700
+              placeholder:text-slate-400
+              outline-none
+              transition-all
+              duration-200
+              hover:bg-slate-100
+              focus:bg-white
+              focus:ring-2
+              focus:ring-blue-200
+              sm:py-3
+            "
+          />
 
-<div className="
-mt-5
-flex
-items-start
-justify-between
-">
+          <textarea
+            name="bio"
+            value={form.bio}
+            onChange={handleChange}
+            rows={3}
+            placeholder="Tell others about yourself..."
+            className="
+              mt-4
+              w-full
+              resize-none
+              rounded-2xl
+              bg-slate-50
+              p-3
+              text-sm
+              leading-6
+              text-slate-700
+              placeholder:text-slate-400
+              outline-none
+              transition-all
+              duration-200
+              hover:bg-slate-100
+              focus:bg-white
+              focus:ring-2
+              focus:ring-blue-200
+              sm:mt-5
+              sm:p-4
+            "
+          />
+        </div>
 
-<div>
-
-<input
-  name="name"
-  value={form.name}
-  onChange={handleChange}
-  className="
-    mt-1
-    w-full
-    rounded-xl
-    bg-transparent
-    px-2
-    py-1
-    text-3xl
-    font-bold
-    text-slate-900
-    outline-none
-    transition-all
-    duration-200
-    hover:bg-slate-50
-    focus:bg-slate-50
-    focus:ring-2
-    focus:ring-blue-200
-  "
-/>
-<p className="text-slate-500">
-
-{profile.email}
-</p>
-
-<input
-  name="collegeName"
-  value={form.collegeName}
-  onChange={handleChange}
-  placeholder="Your College"
-  className="
-    mt-4
-    w-full
-    rounded-xl
-    bg-slate-50
-    px-4
-    py-3
-    text-sm
-    font-medium
-    text-slate-700
-    placeholder:text-slate-400
-    outline-none
-    transition-all
-    duration-200
-    hover:bg-slate-100
-    focus:bg-white
-    focus:ring-2
-    focus:ring-blue-200
-  "
-/>
-
-<textarea
-  name="bio"
-  value={form.bio}
-  onChange={handleChange}
-  rows={4}
-  placeholder="Tell others about yourself..."
-  className="
-    mt-5
-    w-full
-    rounded-2xl
-    bg-slate-50
-    p-4
-    text-sm
-    leading-6
-    text-slate-700
-    placeholder:text-slate-400
-    outline-none
-    resize-none
-    transition-all
-    duration-200
-    hover:bg-slate-100
-    focus:bg-white
-    focus:ring-2
-    focus:ring-blue-200
-  "
-/>
-
-</div>
-
-<Button
-onClick={handleSave}
-className="
-rounded-xl
-px-6
-"
->
-Save Changes
-</Button>
-
-</div>
-
-</div>
-
-</div>
-
+        {/* Save Button */}
+        <Button
+          onClick={handleSave}
+          className="
+            h-10
+            w-full
+            rounded-xl
+            px-5
+            text-sm
+            sm:h-11
+            sm:w-auto
+            sm:px-6
+          "
+        >
+          Save Changes
+        </Button>
+      </div>
+    </div>
+  </div>
 )}
+
       <div className="flex items-end justify-between mb-10">
 
         <div>
@@ -286,75 +310,65 @@ Save Changes
       {!loading && !error && (
         <>
 
-<div className="grid grid-cols-1 md:grid-cols-3 gap-7">
+<div className="grid grid-cols-3 gap-3 md:grid-cols-3 md:gap-7">
+  {[
+    {
+      title: "Total",
+      value: stats.total,
+      icon: <Package className="h-4 w-4 md:h-6 md:w-6" />,
+      color: "from-blue-500 to-cyan-400",
+    },
+    {
+      title: "Selling",
+      value: stats.selling,
+      icon: <ShoppingBag className="h-4 w-4 md:h-6 md:w-6" />,
+      color: "from-violet-500 to-indigo-500",
+    },
+    {
+      title: "Renting",
+      value: stats.renting,
+      icon: <Home className="h-4 w-4 md:h-6 md:w-6" />,
+      color: "from-orange-500 to-amber-400",
+    },
+  ].map((card) => (
+    <div
+      key={card.title}
+      className="
+        group
+        relative
+        overflow-hidden
+        rounded-2xl
+        bg-white
+        p-3
+        shadow-md
+        transition-all
+        duration-300
+        hover:-translate-y-1
+        hover:shadow-xl
+        md:rounded-[28px]
+        md:px-6
+        md:py-5
+      "
+    >
+      <div
+        className={`absolute -right-6 -top-6 h-20 w-20 rounded-full bg-gradient-to-br ${card.color} opacity-20 blur-2xl md:-right-10 md:-top-10 md:h-40 md:w-40 md:blur-3xl`}
+      />
 
-{[
-{
-title:"Total Listings",
-value:stats.total,
-icon:<Package size={26}/>,
-color:"from-blue-500 to-cyan-400"
-},
-{
-title:"Selling",
-value:stats.selling,
-icon:<ShoppingBag size={26}/>,
-color:"from-violet-500 to-indigo-500"
-},
-{
-title:"Renting",
-value:stats.renting,
-icon:<Home size={26}/>,
-color:"from-orange-500 to-amber-400"
-}
-].map(card=>(
+      <div
+        className={`flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br ${card.color} text-white shadow-md md:h-12 md:w-12 md:rounded-2xl`}
+      >
+        {card.icon}
+      </div>
 
-<div
-key={card.title}
-className="
-group
-relative
-overflow-hidden
-rounded-[28px]
-bg-white
-px-6
-py-5
-shadow-lg
-transition-all
-duration-300
-hover:-translate-y-1
-hover:shadow-2xl
-"
->
+      <p className="mt-2 text-[11px] font-medium text-slate-500 md:mt-3 md:text-base">
+        {card.title}
+      </p>
 
-<div
-className={`absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-br ${card.color} opacity-20 blur-3xl`}
-/>
-
-<div
-className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${card.color} text-white shadow-lg`}
->
-
-{card.icon}
-
-</div>
-
-<p className="mt-3 text-slate-500 font-medium">
-
-{card.title}
-
-</p>
-
-<h2 className="mt-2 text-3xl font-bold">
-
-{card.value}
-
-</h2>
-
-</div>
-
-))}
-
+      <h2 className="mt-1 text-lg font-bold text-slate-900 md:mt-2 md:text-3xl">
+        {card.value}
+      </h2>
+    </div>
+  ))}
 </div>
 
 
@@ -417,10 +431,11 @@ Create your first listing and it'll appear here.
       hover:shadow-xl
     "
   >
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col sm:flex-row">
 
       {/* IMAGE */}
-      <div className="relative md:w-56 shrink-0">
+      <div className="relative sm:w-44
+lg:w-56 shrink-0">
         <img
           src={
             listing.images?.length
@@ -428,7 +443,7 @@ Create your first listing and it'll appear here.
               : "https://placehold.co/600x400?text=No+Image"
           }
           alt={listing.title}
-          className="h-40 w-full object-cover md:h-full"
+          className="h-48 w-full object-cover sm:h-full"
         />
 
         <span
@@ -452,15 +467,15 @@ Create your first listing and it'll appear here.
       </div>
 
       {/* CONTENT */}
-      <div className="flex flex-1 flex-col justify-between px-5 py-4">
+      <div className="flex flex-1 flex-col justify-between px-4 py-4 sm:px-5">
 
         <div>
 
           {/* TITLE + PRICE */}
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
 
             <div className="flex-1">
-              <h2 className="text-lg font-semibold text-slate-900 line-clamp-1">
+              <h2 className="text-base sm:text-lg font-semibold text-slate-900 line-clamp-1">
                 {listing.title}
               </h2>
 
@@ -477,14 +492,14 @@ Create your first listing and it'll appear here.
               </p>
             </div>
 
-            <h2 className="whitespace-nowrap text-2xl font-bold text-blue-600">
+            <h2 className="whitespace-nowrap text-xl sm:text-2xl font-bold text-blue-600">
               ₹{listing.price}
             </h2>
 
           </div>
 
           {/* TAGS */}
-          <div className="mt-3 flex flex-wrap items-center gap-2">
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-xs sm:text-sm">
 
             <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
               📚 {listing.category}
@@ -503,10 +518,10 @@ Create your first listing and it'll appear here.
         </div>
 
         {/* BUTTONS */}
-        <div className="mt-4 flex gap-2">
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row">
 
           <Link to={`/listing/${listing.id}`}>
-            <Button className="h-9 rounded-xl px-4 text-sm">
+            <Button className="h-10 w-full rounded-xl px-4 text-sm sm:h-9 sm:w-auto">
               <Eye className="mr-2 h-4 w-4" />
               View
             </Button>
@@ -514,7 +529,7 @@ Create your first listing and it'll appear here.
 
          <Button
   variant="outline"
-  className="h-9 rounded-xl px-4 text-sm"
+  className="h-10 w-full rounded-xl px-4 text-sm sm:h-9 sm:w-auto"
   onClick={() => navigate(`/edit-listing/${listing.id}`)}
 >
   Edit
@@ -522,7 +537,7 @@ Create your first listing and it'll appear here.
 
           <Button
             variant="destructive"
-            className="h-9 rounded-xl px-4 text-sm"
+            className="h-10 w-full rounded-xl px-4 text-sm sm:h-9 sm:w-auto"
             onClick={() => deleteListing(listing.id)}
           >
             <Trash2 className="mr-2 h-4 w-4" />

@@ -1,6 +1,8 @@
 import { MapPin } from "lucide-react";
-
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 function ChatHeader({ conversation, currentUser }) {
+    const navigate = useNavigate();
   if (!conversation) {
     return (
       <div className="flex h-20 items-center border-b border-slate-200 bg-white px-6">
@@ -27,50 +29,70 @@ function ChatHeader({ conversation, currentUser }) {
       backdrop-blur-xl
       "
     >
-      <div className="flex items-center justify-between px-6 py-5">
+     <div className="flex items-center justify-between px-3 py-3 sm:px-6 sm:py-5">
 
         {/* LEFT */}
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
 
-          <img
-            src={image}
-            alt=""
-            className="
-            h-14
-            w-14
-            rounded-2xl
-            object-cover
-            shadow-md
-            "
-          />
+  {/* Mobile Back Button */}
+  <button
+    onClick={() => navigate("/messages")}
+    className="
+      flex
+      h-10
+      w-10
+      items-center
+      justify-center
+      rounded-full
+      hover:bg-slate-100
+      lg:hidden
+    "
+  >
+    <ArrowLeft size={22} />
+  </button>
 
-          <div>
+  <img
+    src={image}
+    alt=""
+    className="
+      h-12
+      w-12
+      rounded-xl
+      object-cover
+      shadow-md
+      sm:h-14
+      sm:w-14
+      sm:rounded-2xl
+    "
+  />
 
-            <h2 className="text-lg font-bold text-slate-900">
-              {conversation.listing.title}
-            </h2>
+  <div className="min-w-0">
 
-            <div className="mt-1 flex items-center gap-2">
+    <h2 className="truncate text-base font-bold text-slate-900 sm:text-lg">
+      {conversation.listing.title}
+    </h2>
 
-              <img
-                src={
-                  otherUser.avatarUrl ||
-                  `https://ui-avatars.com/api/?name=${otherUser.name}`
-                }
-                alt=""
-                className="h-7 w-7 rounded-full"
-              />
+    <div className="mt-1 flex items-center gap-2">
 
-              <span className="text-sm font-medium text-slate-700">
-                {otherUser.name}
-              </span>
+      <img
+        src={
+          otherUser.avatarUrl ||
+          `https://ui-avatars.com/api/?name=${otherUser.name}`
+        }
+        alt=""
+        className="h-6 w-6 rounded-full sm:h-7 sm:w-7"
+      />
 
-            </div>
+      <span className="truncate text-xs font-medium text-slate-700 sm:text-sm">
+        {otherUser.name}
+      </span>
 
-          </div>
+    </div>
 
-        </div>
+  </div>
+
+</div>
 
         {/* RIGHT */}
 

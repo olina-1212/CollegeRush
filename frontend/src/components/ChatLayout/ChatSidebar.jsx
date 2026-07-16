@@ -30,17 +30,18 @@ function ChatSidebar({
   }, [search, conversations]);
 
   return (
-    <aside
-      className="
-      hidden
+   <aside
+  className="
+      flex
       h-full
+      w-full
+      flex-col
       border-r
       border-slate-200
       bg-white
-      lg:flex
-      lg:flex-col
-      "
-    >
+      lg:w-[340px]
+  "
+>
       {/* TOP */}
 
       <div className="border-b border-slate-200 px-7 py-6">
@@ -104,10 +105,9 @@ function ChatSidebar({
         {filtered.map((conversation) => {
 
           const otherUser =
-            conversation.buyerId === conversation.currentUserId
-              ? conversation.seller
-              : conversation.buyer;
-
+  conversation.buyerId === currentUser?.id
+    ? conversation.seller
+    : conversation.buyer;
           const lastMessage =
             conversation.messages?.[0]?.content ??
             "Start chatting";

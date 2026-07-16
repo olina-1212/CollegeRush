@@ -107,11 +107,9 @@ useEffect(() => {
 
     setConversations(chats);
 
-    if (!id && chats.length > 0) {
-      navigate(`/messages/${chats[0].id}`, {
-        replace: true,
-      });
-    }
+    if (!id) {
+  return;
+}
   };
 
   load(); // ✅ KEEP THIS
@@ -162,24 +160,40 @@ useEffect(() => {
           shadow-[0_20px_60px_rgba(15,23,42,.08)]
           "
         >
-          <div
-            className="
-            grid
-            h-[calc(100vh-170px)]
-            lg:grid-cols-[340px_1fr]
-            "
-          >
+          <div className="flex h-[calc(100dvh-80px)] overflow-hidden">
             {/* Sidebar */}
 
-            <ChatSidebar
+           <div
+  className={`
+    ${
+      id ? "hidden" : "block"
+    }
+    w-full
+    border-r
+    lg:block
+    lg:w-[340px]
+  `}
+>
+  <ChatSidebar
     conversations={conversations}
     currentUser={currentUser}
     activeConversationId={id}
     onSelectConversation={openConversation}
-/>
+  />
+</div>
             {/* Chat Area */}
 
-            <div className="flex min-h-0 flex-col">
+            <div
+  className={`
+    ${
+      id ? "flex" : "hidden"
+    }
+    min-h-0
+    flex-1
+    flex-col
+    lg:flex
+  `}
+>
 
               <ChatHeader
   conversation={conversation}
