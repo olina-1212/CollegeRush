@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardContent,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 
 function ProductCard({ listing }) {
   
