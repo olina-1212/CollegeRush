@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 import {
   Trash2,
