@@ -11,8 +11,8 @@ import {
 
 import api from "../api/apiClient";
 import AppShell from "../components/dashboard/AppShell";
-import { Button } from "../components/ui/button";
-import { Badge } from "../components/ui/badge";
+import { Button } from "../components/ui/Button";
+import { Badge } from "../components/ui/Badge";
 
 function ListingDetails() {
   const { id } = useParams();

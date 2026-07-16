@@ -8,7 +8,7 @@ import {
 
 import Logo from "../Logo";
 import { Input } from "../ui/Input";
-import { Button } from "../ui/button";
+import { Button } from "../ui/Button";
 
 function Navbar({ search, setSearch }) {
   const { pathname } = useLocation();

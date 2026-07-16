@@ -5,11 +5,11 @@ import { createListing } from "../api/listingApi";
 import AppShell from "../components/dashboard/AppShell";
 import api from "../api/apiClient";
 
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
+import { Button } from "../components/ui/Button";
+import { Input } from "../components/ui/Input";
+import { Label } from "../components/ui/Label";
 import { Textarea } from "../components/ui/textarea";
-import { Badge } from "../components/ui/badge";
+import { Badge } from "../components/ui/Badge";
 
 import {
   ImagePlus,

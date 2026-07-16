@@ -11,7 +11,7 @@ import {
 
 import AppShell from "../components/dashboard/AppShell";
 import api from "../api/apiClient";
-import { Button } from "../components/ui/button";
+import { Button } from "../components/ui/Button";
 
 function MyListings() {
   const [profile, setProfile] = useState(null);
