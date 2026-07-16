@@ -108,9 +108,9 @@ const startConversation = async () => {
     <AppShell>
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
 
-        <div className="w-full max-w-[1700px] px-8 py-8 mx-auto">
+        <div className="w-full max-w-[1700px] px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8 mx-auto">
 
-          <div className="grid gap-10 xl:grid-cols-[1.8fr_430px]">
+          <div className="grid gap-5 lg:gap-10 xl:grid-cols-[1.8fr_430px]">
 
             {/* LEFT */}
 
@@ -124,21 +124,21 @@ const startConversation = async () => {
                   src={images[activeImage]?.url}
                   alt={listing.title || "Listing"}
                   className="
-h-[380px]
+h-[260px]
+sm:h-[350px]
 md:h-[460px]
 xl:h-[520px]
 w-full
-object-contain
+object-cover
 bg-slate-100
 transition-all
 duration-700
-group-hover:scale-[1.02]
-"
+group-hover:scale-[1.02]"
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
 
-                <div className="absolute bottom-8 left-8">
+                <div className="absolute bottom-4 left-4 sm:bottom-8 sm:left-8">
 
                   <div className="flex flex-wrap gap-3">
 
@@ -162,7 +162,18 @@ group-hover:scale-[1.02]
 
                   </div>
 
-                  <h1 className="mt-6 max-w-3xl text-5xl font-black leading-tight text-white drop-shadow-lg">
+                  <h1 className="
+mt-3
+sm:mt-6
+max-w-[90%]
+text-2xl
+sm:text-4xl
+xl:text-5xl
+font-black
+leading-tight
+text-white
+drop-shadow-lg
+">
                     {listing.title}
                   </h1>
 
@@ -236,8 +247,10 @@ group-hover:scale-[1.02]
                       onClick={() => setActiveImage(index)}
                       className={`
                         relative
-                        h-28
-                        w-32
+                        h-20
+w-24
+sm:h-28
+sm:w-32
                         shrink-0
                         overflow-hidden
                         rounded-3xl
@@ -265,7 +278,7 @@ group-hover:scale-[1.02]
               )}
 
               {/* PRODUCT INFO */}
-<div className="mt-8 rounded-[28px] bg-white p-7 shadow-lg">
+<div className="mt-8 rounded-[28px] bg-white p-4 sm:p-7 shadow-lg">
 
   <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
 
@@ -281,7 +294,7 @@ group-hover:scale-[1.02]
 
     </div>
 
-    <div className="flex shrink-0 gap-3">
+    <div className="flex flex-wrap gap-3">
 
       <div className="rounded-2xl bg-slate-100 px-4 py-3">
 
@@ -354,109 +367,219 @@ group-hover:scale-[1.02]
     </div>
 
 </div></div></div>
-            {/* RIGHT SIDEBAR */}
+           {/* RIGHT SIDEBAR */}
 
-            <div>
+<div>
 
-              <div className="sticky top-24">
-                              <div className="overflow-hidden rounded-[38px] border border-white/40 bg-white/80 p-8 shadow-[0_25px_80px_rgba(15,23,42,.12)] backdrop-blur-xl">
+  <div className="xl:sticky xl:top-24">
 
-                  {/* PRICE */}
+    <div
+      className="
+      overflow-hidden
+      rounded-[28px]
+      border
+      border-white/40
+      bg-white/80
+      p-5
+      sm:p-7
+      shadow-[0_20px_60px_rgba(15,23,42,.10)]
+      backdrop-blur-xl
+      "
+    >
 
-                  <div className="rounded-[30px] bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 p-8 text-white shadow-xl">
+      {/* PRICE */}
 
-                    <p className="text-sm uppercase tracking-[0.35em] text-blue-100">
-                      Asking Price
-                    </p>
+      <div
+        className="
+        rounded-[24px]
+        bg-gradient-to-br
+        from-blue-600
+        via-indigo-600
+        to-violet-600
+        p-5
+        sm:p-7
+        text-white
+        shadow-xl
+        "
+      >
 
-                    <h2 className="mt-3 text-4xl md:text-5xl lg:text-6xl font-black tracking-tight">
-                      ₹{listing.price}
-                    </h2>
+        <p className="text-[11px] uppercase tracking-[0.25em] text-blue-100">
+          Asking Price
+        </p>
 
-                    <p className="mt-3 text-blue-100">
-                      Fair price • Negotiable with seller
-                    </p>
 
-                  </div>
+        <h2
+          className="
+          mt-2
+          text-4xl
+          sm:text-5xl
+          font-black
+          tracking-tight
+          "
+        >
+          ₹{listing.price}
+        </h2>
 
-                  
 
-                  
+        <p className="mt-2 text-sm text-blue-100">
+          Fair price • Negotiable
+        </p>
 
-                  {/* SELLER */}
+      </div>
 
-                  <div className="mt-10 overflow-hidden rounded-[30px] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-7 text-white">
 
-                    <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
-                      Seller
-                    </p>
 
-                    <div className="mt-6 flex items-center gap-5">
+      {/* SELLER */}
 
-                      <img
-                        src={
-                          listing.seller?.avatarUrl||
-                          "https://ui-avatars.com/api/?background=2563eb&color=fff&size=256&name=" +
-                            encodeURIComponent(listing.seller?.name)
-                        }
-                        alt={listing.seller.name}
-                        className="h-16 w-16 md:h-20 md:w-20 rounded-full border-4 border-white object-cover shadow-xl"
-                      />
+      <div
+        className="
+        mt-6
+        rounded-[24px]
+        bg-gradient-to-br
+        from-slate-900
+        via-slate-800
+        to-slate-900
+        p-5
+        sm:p-6
+        text-white
+        "
+      >
 
-                      <div>
+        <p
+          className="
+          text-[10px]
+          uppercase
+          tracking-[0.3em]
+          text-slate-400
+          "
+        >
+          Seller
+        </p>
 
-                        <h3 className="text-2xl font-bold">
-                          {listing.seller.name}
-                        </h3>
 
-                        <p className="mt-1 text-slate-300">
-                          {listing.seller?.collegeName ||
-                            "CollegeSquare User"}
-                        </p>
+        <div
+          className="
+          mt-5
+          flex
+          items-center
+          gap-4
+          "
+        >
 
-                      </div>
+          <img
+            src={
+              listing.seller?.avatarUrl ||
+              "https://ui-avatars.com/api/?background=2563eb&color=fff&size=256&name=" +
+                encodeURIComponent(listing.seller?.name || "User")
+            }
+            alt={listing.seller?.name}
+            className="
+            h-14
+            w-14
+            sm:h-16
+            sm:w-16
+            shrink-0
+            rounded-full
+            border-2
+            border-white/80
+            object-cover
+            shadow-lg
+            "
+          />
 
-                    </div>
 
-                  </div>
+          <div className="min-w-0">
 
-                  {/* ACTION BUTTONS */}
+            <h3
+              className="
+              truncate
+              text-lg
+              sm:text-xl
+              font-bold
+              "
+            >
+              {listing.seller?.name}
+            </h3>
 
-                  <Button
-  onClick={startConversation}
-  disabled={startingChat}
-  className="
-  mt-10
-  h-14
-  w-full
-  rounded-2xl
-  bg-gradient-to-r
-  from-blue-600
-  to-indigo-600
-  text-base
-  font-semibold
-  shadow-xl
-  transition-all
-  hover:scale-[1.02]
-  hover:shadow-2xl
-  disabled:opacity-60
-  "
->
-  <MessageCircle className="mr-3 h-5 w-5" />
 
-  {startingChat ? "Opening..." : "Contact Seller"}
-</Button>
+            <p
+              className="
+              mt-1
+              truncate
+              text-sm
+              text-slate-300
+              "
+            >
+              {listing.seller?.collegeName ||
+                "CollegeSquare User"}
+            </p>
 
-                  <p className="mt-6 text-center text-sm leading-6 text-slate-500">
-                    Always meet in a safe public place inside your campus.
-                    Never pay in advance without verifying the product.
-                  </p>
 
-                </div>
+          </div>
 
-              </div>
 
-            </div>
+        </div>
+
+
+      </div>
+
+
+
+      {/* CONTACT BUTTON */}
+
+      <Button
+        onClick={startConversation}
+        disabled={startingChat}
+        className="
+        mt-6
+        h-12
+        sm:h-14
+        w-full
+        rounded-2xl
+        bg-gradient-to-r
+        from-blue-600
+        to-indigo-600
+        text-sm
+        sm:text-base
+        font-semibold
+        shadow-xl
+        transition-all
+        hover:scale-[1.02]
+        hover:shadow-2xl
+        disabled:opacity-60
+        "
+      >
+
+        <MessageCircle className="mr-2 h-5 w-5" />
+
+        {startingChat ? "Opening..." : "Contact Seller"}
+
+      </Button>
+
+
+
+      <p
+        className="
+        mt-5
+        text-center
+        text-xs
+        sm:text-sm
+        leading-5
+        text-slate-500
+        "
+      >
+        Meet safely inside your campus.
+        Verify products before payment.
+      </p>
+
+
+    </div>
+
+
+  </div>
+
+
+</div>
 
           </div>
 
