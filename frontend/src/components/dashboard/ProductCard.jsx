@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  Heart,
   MapPin,
   Clock3,
   ArrowRight,
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/card";
 
 function ProductCard({ listing }) {
-  const [saved, setSaved] = useState(false);
+  
 
   const image =
     listing.images?.length > 0
@@ -31,18 +30,18 @@ function ProductCard({ listing }) {
 
   return (
     <Card
-      className="
-      group
-      overflow-hidden
-      rounded-3xl
-      border-0
-      bg-white
-      shadow-sm
-      transition-all
-      duration-300
-      hover:-translate-y-2
-      hover:shadow-2xl
-    "
+  className="
+    group
+    overflow-hidden
+    rounded-3xl
+    border-0
+    bg-white
+    shadow-sm
+    transition-all
+    duration-300
+    hover:-translate-y-1
+    hover:shadow-xl
+  "
     >
       {/* IMAGE */}
 
@@ -52,13 +51,13 @@ function ProductCard({ listing }) {
           src={image}
           alt={listing.title}
           className="
-            h-60
-            w-full
-            object-cover
-            transition-transform
-            duration-500
-            group-hover:scale-110
-          "
+  h-48
+  w-full
+  object-cover
+  transition-transform
+  duration-500
+  group-hover:scale-105
+"
         />
 
         {/* dark gradient */}
@@ -76,46 +75,20 @@ function ProductCard({ listing }) {
 
         {/* Wishlist */}
 
-        <button
-          onClick={() => setSaved(!saved)}
-          className="
-            absolute
-            right-4
-            top-4
-            flex
-            h-10
-            w-10
-            items-center
-            justify-center
-            rounded-full
-            bg-white/90
-            shadow-lg
-            backdrop-blur
-            transition
-            hover:scale-110
-          "
-        >
-          <Heart
-            className={`h-5 w-5 transition ${
-              saved
-                ? "fill-red-500 text-red-500"
-                : "text-slate-500"
-            }`}
-          />
-        </button>
+       
       </div>
 
-      <CardContent className="space-y-5 p-6">
+      <CardContent className="space-y-3 p-5">
 
         {/* Category */}
 
-        <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-600">
           {listing.category}
         </p>
 
         {/* Title */}
 
-        <h2 className="line-clamp-2 text-xl font-bold text-slate-900">
+        <h2 className="line-clamp-2 text-lg font-bold text-slate-900">
           {listing.title}
         </h2>
 

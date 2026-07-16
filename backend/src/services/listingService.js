@@ -121,11 +121,8 @@ export const getListingById = async (id) => {
     },
   });
 };
-
 export const updateListing = async (id, data, uploadedImages) => {
-
   if (uploadedImages.length > 0) {
-
     const oldImages = await prisma.listingImage.findMany({
       where: {
         listingId: id,
@@ -134,35 +131,46 @@ export const updateListing = async (id, data, uploadedImages) => {
 
     for (const image of oldImages) {
       if (image.publicId) {
-        await cloudinary.uploader.destroy(image.publicId);
+        try {
+          await cloudinary.uploader.destroy(image.publicId);
+        } catch (err) {
+          console.error(
+            `Failed to delete ${image.publicId}`,
+            err
+          );
+        }
       }
     }
-
-    await prisma.listingImage.deleteMany({
-      where: {
-        listingId: id,
-      },
-    });
   }
 
-  return await prisma.listing.update({
-    where: {
-      id,
-    },
-    data: {
-      ...data,
-
-      ...(uploadedImages.length > 0 && {
-        images: {
-          create: uploadedImages,
+  return await prisma.$transaction(async (tx) => {
+    if (uploadedImages.length > 0) {
+      await tx.listingImage.deleteMany({
+        where: {
+          listingId: id,
         },
-      }),
-    },
+      });
+    }
 
-    include: {
-      seller: true,
-      images: true,
-    },
+    return tx.listing.update({
+      where: {
+        id,
+      },
+      data: {
+        ...data,
+
+        ...(uploadedImages.length > 0 && {
+          images: {
+            create: uploadedImages,
+          },
+        }),
+      },
+
+      include: {
+        seller: true,
+        images: true,
+      },
+    });
   });
 };
 

@@ -178,7 +178,6 @@ if (req.files && req.files.length > 0) {
     });
   }
 };
-
 export const deleteListing = async (req, res) => {
   try {
     const listing = await listingService.getListingById(req.params.id);
@@ -197,6 +196,23 @@ export const deleteListing = async (req, res) => {
       });
     }
 
+    // Delete all images from Cloudinary first
+    if (listing.images && listing.images.length > 0) {
+      for (const image of listing.images) {
+        if (image.publicId) {
+          try {
+            await cloudinary.uploader.destroy(image.publicId);
+          } catch (err) {
+            console.error(
+              `Failed to delete image ${image.publicId}`,
+              err
+            );
+          }
+        }
+      }
+    }
+
+    // Delete listing from database
     await listingService.deleteListing(req.params.id);
 
     return res.status(200).json({

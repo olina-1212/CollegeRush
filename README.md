@@ -1,1 +1,1 @@
-# CollegeRush
+# CollegeSquare

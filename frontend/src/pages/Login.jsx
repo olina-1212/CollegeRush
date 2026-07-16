@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import { GoogleLogin } from "@react-oauth/google";
-import axios from "axios";
+import api from "../api/apiClient";
 import { useNavigate } from "react-router-dom";
 
 
