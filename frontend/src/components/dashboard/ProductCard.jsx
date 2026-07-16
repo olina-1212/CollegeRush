@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   MapPin,
   Clock3,
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/Card";
 
 function ProductCard({ listing }) {
-  
+  const navigate = useNavigate();
 
   const image =
     listing.images?.length > 0
@@ -30,8 +30,10 @@ function ProductCard({ listing }) {
 
   return (
     <Card
+  onClick={() => navigate(`/listing/${listing.id}`)}
   className="
     group
+    cursor-pointer
     overflow-hidden
     rounded-3xl
     border-0
@@ -42,7 +44,7 @@ function ProductCard({ listing }) {
     hover:-translate-y-1
     hover:shadow-xl
   "
-    >
+>
       {/* IMAGE */}
 
       <div className="relative overflow-hidden">
@@ -51,7 +53,8 @@ function ProductCard({ listing }) {
           src={image}
           alt={listing.title}
           className="
-  h-48
+ h-40
+sm:h-48
   w-full
   object-cover
   transition-transform
@@ -88,7 +91,7 @@ function ProductCard({ listing }) {
 
         {/* Title */}
 
-        <h2 className="line-clamp-2 text-lg font-bold text-slate-900">
+        <h2 className="line-clamp-2 text-base sm:text-lg font-bold text-slate-900">
           {listing.title}
         </h2>
 
@@ -116,31 +119,21 @@ function ProductCard({ listing }) {
 
         {/* Bottom */}
 
-        <div className="flex items-center justify-between border-t pt-5">
+       <div className="border-t pt-5">
 
-          <div>
+  <p className="text-xs font-medium uppercase tracking-[0.15em] text-slate-400">
+    Price
+  </p>
 
-            <p className="text-3xl font-bold text-slate-900">
-              ₹{listing.price}
-            </p>
+  <h2 className="mt-1 text-3xl font-extrabold tracking-tight text-blue-600">
+    ₹{listing.price}
+  </h2>
 
-            <p className="text-xs text-slate-500">
-              Negotiable
-            </p>
+  <p className="mt-1 text-sm text-slate-500">
+    📍 {listing.location || listing.seller?.collegeName || "Campus"}
+  </p>
 
-          </div>
-
-          <Button
-            asChild
-            className="rounded-t-3xl px-5"
-          >
-            <Link to={`/item/${listing.id}`}>
-              View
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-
-        </div>
+</div>
 
       </CardContent>
     </Card>

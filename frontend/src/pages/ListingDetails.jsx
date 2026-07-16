@@ -106,7 +106,7 @@ const startConversation = async () => {
 
   return (
     <AppShell>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100">
 
         <div className="w-full max-w-[1700px] px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8 mx-auto">
 
@@ -118,23 +118,37 @@ const startConversation = async () => {
 
               {/* IMAGE CARD */}
 
-              <div className="group relative overflow-hidden rounded-[38px] bg-white shadow-[0_25px_80px_rgba(15,23,42,.12)]">
+              <div
+className="
+group
+relative
+w-full
+max-w-full
+overflow-hidden
+rounded-[38px]
+bg-white
+shadow-[0_25px_80px_rgba(15,23,42,.12)]
+"
+>
 
                 <img
-                  src={images[activeImage]?.url}
-                  alt={listing.title || "Listing"}
-                  className="
+  src={images[activeImage]?.url}
+  alt={listing.title}
+  className="
+block
+w-full
+max-w-full
 h-[260px]
 sm:h-[350px]
 md:h-[460px]
 xl:h-[520px]
-w-full
 object-cover
 bg-slate-100
-transition-all
+transition-transform
 duration-700
-group-hover:scale-[1.02]"
-                />
+group-hover:scale-[1.02]
+"
+/>
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
 
@@ -165,7 +179,8 @@ group-hover:scale-[1.02]"
                   <h1 className="
 mt-3
 sm:mt-6
-max-w-[90%]
+max-w-[80%] sm:max-w-[90%]
+break-words
 text-2xl
 sm:text-4xl
 xl:text-5xl
@@ -188,22 +203,25 @@ drop-shadow-lg
                         )
                       }
                       className="
-                      absolute
-                      left-8
-                      top-1/2
-                      flex
-                      h-14
-                      w-14
-                      -translate-y-1/2
-                      items-center
-                      justify-center
-                      rounded-full
-                      bg-white/90
-                      shadow-xl
-                      backdrop-blur
-                      transition
-                      hover:scale-110
-                      "
+absolute
+left-2
+sm:left-8
+top-1/2
+-translate-y-1/2
+flex
+h-10
+w-10
+sm:h-14
+sm:w-14
+items-center
+justify-center
+rounded-full
+bg-white/90
+shadow-xl
+backdrop-blur
+transition
+hover:scale-110
+"
                     >
                       <ChevronLeft />
                     </button>
@@ -214,23 +232,26 @@ drop-shadow-lg
                           prev === images.length - 1 ? 0 : prev + 1
                         )
                       }
-                      className="
-                      absolute
-                      right-8
-                      top-1/2
-                      flex
-                      h-14
-                      w-14
-                      -translate-y-1/2
-                      items-center
-                      justify-center
-                      rounded-full
-                      bg-white/90
-                      shadow-xl
-                      backdrop-blur
-                      transition
-                      hover:scale-110
-                      "
+                     className="
+absolute
+right-2
+sm:right-8
+top-1/2
+-translate-y-1/2
+flex
+h-10
+w-10
+sm:h-14
+sm:w-14
+items-center
+justify-center
+rounded-full
+bg-white/90
+shadow-xl
+backdrop-blur
+transition
+hover:scale-110
+"
                     >
                       <ChevronRight />
                     </button>
@@ -240,7 +261,7 @@ drop-shadow-lg
                             {/* THUMBNAILS */}
 
               {images.length > 1 && (
-                <div className="mt-8 flex gap-5 overflow-x-auto pb-2">
+                <div className="mt-8 flex gap-5 max-w-full pb-2">
                   {images.map((img, index) => (
                     <button
                       key={img.url || index}
