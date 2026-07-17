@@ -28,6 +28,7 @@ model User {
   conversationsAsBuyer  Conversation[] @relation("BuyerConversations")
   conversationsAsSeller Conversation[] @relation("SellerConversations")
   notifications         Notification[]
+  workPosts WorkPost[]
 }
 
 model Listing {
@@ -112,7 +113,23 @@ model Message {
   @@index([conversationId])
   @@index([conversationId, createdAt])
 }
+model WorkPost {
+  id          String   @id @default(uuid())
 
+  title       String
+  description String
+
+  subject     String?
+  budget      Decimal  @db.Decimal(10,2)
+
+  deadline    DateTime?
+
+  sellerId    String
+  seller      User @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 model Notification {
   id        String           @id @default(uuid())
   userId    String

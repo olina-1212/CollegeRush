@@ -10,6 +10,7 @@ import wishlistRoutes from "./routes/wishlistRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
+import workRoutes from "./routes/workRoutes.js";
 
 const app = express();
 
@@ -86,6 +87,7 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/workposts", workRoutes);
 
 
 // Health check
