@@ -28,7 +28,7 @@ model User {
   conversationsAsBuyer  Conversation[] @relation("BuyerConversations")
   conversationsAsSeller Conversation[] @relation("SellerConversations")
   notifications         Notification[]
-  workPosts WorkPost[]
+  workPosts             WorkPost[]
 }
 
 model Listing {
@@ -80,54 +80,32 @@ model WishlistItem {
 }
 
 model Conversation {
-  id          String   @id @default(uuid())
+  id String @id @default(uuid())
 
-  buyerId     String
-  sellerId    String
+  buyerId  String
+  sellerId String
 
-  listingId   String?
-  workPostId  String?
+  listingId  String?
+  workPostId String?
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
+  buyer User @relation("BuyerConversations", fields: [buyerId], references: [id], onDelete: Cascade)
 
-  buyer    User @relation(
-    "BuyerConversations",
-    fields: [buyerId],
-    references: [id],
-    onDelete: Cascade
-  )
+  seller User @relation("SellerConversations", fields: [sellerId], references: [id], onDelete: Cascade)
 
-  seller   User @relation(
-    "SellerConversations",
-    fields: [sellerId],
-    references: [id],
-    onDelete: Cascade
-  )
+  listing Listing? @relation(fields: [listingId], references: [id], onDelete: Cascade)
 
-
-  listing Listing? @relation(
-    fields: [listingId],
-    references: [id],
-    onDelete: Cascade
-  )
-
-
-  workPost WorkPost? @relation(
-    fields: [workPostId],
-    references: [id],
-    onDelete: Cascade
-  )
-
+  workPost WorkPost? @relation(fields: [workPostId], references: [id], onDelete: Cascade)
 
   messages Message[]
 
-
   @@unique([buyerId, sellerId, listingId, workPostId])
-
   @@index([buyerId])
   @@index([sellerId])
+  @@index([listingId])
+  @@index([workPostId])
 }
 
 model Message {
@@ -144,30 +122,25 @@ model Message {
   @@index([conversationId])
   @@index([conversationId, createdAt])
 }
-model WorkPost {
-  id          String   @id @default(uuid())
 
+model WorkPost {
+  id          String    @id @default(uuid())
   title       String
   description String
-
   subject     String?
-  budget      Decimal  @db.Decimal(10,2)
-
+  budget      Decimal   @db.Decimal(10, 2)
   deadline    DateTime?
 
-  sellerId    String
+  sellerId String
 
-  seller User @relation(
-    fields:[sellerId],
-    references:[id],
-    onDelete:Cascade
-  )
+  seller User @relation(fields: [sellerId], references: [id], onDelete: Cascade)
 
   conversations Conversation[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
 model Notification {
   id        String           @id @default(uuid())
   userId    String
