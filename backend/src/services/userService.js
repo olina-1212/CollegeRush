@@ -2,20 +2,30 @@ import prisma from "../config/prisma.js";
 
 export const getProfile = async (userId) => {
   return await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-    include: {
-      listings: {
-        include: {
-          images: true,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
+  where: {
+    id: userId,
+  },
+
+  include: {
+
+    listings: {
+      include: {
+        images: true,
+      },
+
+      orderBy: {
+        createdAt: "desc",
       },
     },
-  });
+
+    workPosts: {
+      orderBy: {
+        createdAt: "desc",
+      },
+    },
+
+  },
+});
 };
 
 export const updateProfile = async (userId, data) => {

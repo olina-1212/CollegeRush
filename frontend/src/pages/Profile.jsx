@@ -24,6 +24,7 @@ function MyListings() {
   });
 
   const [listings, setListings] = useState([]);
+  const [workPosts, setWorkPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -55,6 +56,7 @@ setForm({
 });
 
 setListings(data.listings || []);
+setWorkPosts(data.workPosts || []);
 
   } catch (err) {
     console.error(err);
@@ -103,8 +105,9 @@ const stats = useMemo(() => {
     total: listings.length,
     selling: listings.filter((l) => l.type === "SELL").length,
     renting: listings.filter((l) => l.type === "RENT").length,
+    works: workPosts.length,
   };
-}, [listings]);
+}, [listings, workPosts]);
   
   return (
     <AppShell>
@@ -336,12 +339,7 @@ const stats = useMemo(() => {
 
 <div className="grid grid-cols-3 gap-2 sm:gap-6 md:gap-7">
   {[
-    {
-      title: "Total",
-      value: stats.total,
-      icon: <Package className="h-4 w-4 md:h-6 md:w-6" />,
-      color: "from-blue-500 to-cyan-400",
-    },
+    
     {
       title: "Selling",
       value: stats.selling,
@@ -354,6 +352,12 @@ const stats = useMemo(() => {
       icon: <Home className="h-4 w-4 md:h-6 md:w-6" />,
       color: "from-orange-500 to-amber-400",
     },
+    {
+  title: "Work Requests",
+  value: stats.works,
+  icon: <Package className="h-4 w-4 md:h-6 md:w-6" />,
+  color: "from-green-500 to-emerald-400",
+},
   ].map((card) => (
     <div
       key={card.title}
@@ -587,7 +591,110 @@ onClick={(e) => {
 )}
 
 </div>
+<div className="mt-12">
 
+<h2 className="
+text-3xl
+font-bold
+text-slate-900
+mb-6
+">
+My Work Requests
+</h2>
+
+
+{workPosts.length === 0 ? (
+
+<div className="
+rounded-[32px]
+bg-white
+p-10
+text-center
+shadow-xl
+">
+
+<p className="text-slate-500">
+No assignment/project requests created yet.
+</p>
+
+</div>
+
+) : (
+
+<div className="grid gap-6">
+
+{workPosts.map((work)=>(
+
+<div
+key={work.id}
+className="
+rounded-3xl
+bg-white
+p-6
+shadow-md
+"
+>
+
+<h3 className="
+text-xl
+font-bold
+text-slate-900
+">
+{work.title}
+</h3>
+
+
+<p className="
+mt-2
+text-slate-500
+">
+{work.description}
+</p>
+
+
+<div className="
+mt-4
+flex
+flex-wrap
+gap-3
+">
+
+<span className="
+rounded-full
+bg-blue-50
+px-4
+py-2
+text-sm
+text-blue-600
+">
+{work.subject}
+</span>
+
+
+<span className="
+rounded-full
+bg-green-50
+px-4
+py-2
+text-sm
+text-green-600
+">
+₹{work.budget}
+</span>
+
+
+</div>
+
+
+</div>
+
+))}
+
+</div>
+
+)}
+
+</div>
 </>
 
 )}
