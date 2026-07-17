@@ -7,7 +7,8 @@ import CreateListing from "./pages/CreateListing";
 import EditListing from "./pages/EditListing";
 import ListingDetails from "./pages/ListingDetails";
 import Chat from "./pages/Chat";
-
+import Work from "./pages/Work";
+import CreateWork from "./pages/CreateWork";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
@@ -28,6 +29,22 @@ function App() {
             </ProtectedRoute>
           }
         />
+<Route
+  path="/work"
+  element={
+    <ProtectedRoute>
+      <Work />
+    </ProtectedRoute>
+  }
+/>
+<Route
+ path="/create-work"
+ element={
+ <ProtectedRoute>
+  <CreateWork/>
+ </ProtectedRoute>
+ }
+/>
 
         <Route
           path="/create-listing"

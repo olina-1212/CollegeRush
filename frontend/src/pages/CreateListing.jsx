@@ -19,14 +19,8 @@ import {
   IndianRupee,
   Sparkles
 } from "lucide-react";
-
-
 function CreateListing() {
-
-
 const navigate = useNavigate();
-
-
 const [form,setForm] = useState({
 
 title:"",
@@ -36,66 +30,33 @@ type:"SELL",
 category:"BOOKS",
 condition:"LIKE_NEW",
 location:""
-
 });
-
-
 const [images,setImages] = useState([]);
-
-
 const [loading,setLoading] = useState(false);
-
-
-
 const handleChange=(e)=>{
-
 setForm({
-
 ...form,
-
 [e.target.name]:e.target.value
-
 });
-
 };
-
-
-
 const handleSubmit=async(e)=>{
-
 e.preventDefault();
-
-
 try{
-
-
 setLoading(true);
-
-
 const data = new FormData();
-
-
 Object.keys(form).forEach(key=>{
-
 data.append(
 key,
 form[key]
 );
-
 });
-
-
 images.forEach(img=>{
-
 data.append(
 "images",
 img
 );
 
 });
-
-
-
 await api.post(
 "/listings",
 data,
@@ -120,29 +81,13 @@ console.error(err);
 alert(
 err.response?.data?.message ||
 "Something went wrong"
-);
-
-}
-
+);}
 finally{
-
 setLoading(false);
-
-}
-
-
-};
-
-
-
+}};
 return (
-
 <AppShell>
-
-
 <div className="relative">
-
-
 {/* background glow */}
 
 <div className="
@@ -155,31 +100,20 @@ rounded-full
 bg-blue-200/40
 blur-3xl
 "/>
-
-
-
 <div className="
 relative
 max-w-7xl
 mx-auto
 ">
-
-
 {/* HEADER */}
-
-
 <div className="
 mb-10
 ">
-
-
 <div className="
 flex
 items-center
 gap-3
 ">
-
-
 <div className="
 flex
 h-12
@@ -218,43 +152,20 @@ text-slate-500
 Sell or rent anything across your campus.
 
 </p>
-
-
-</div>
-
-
-</div>
-
-</div>
-
-
-
-
-
-
+</div></div></div>
 <div className="
 grid
 lg:grid-cols-[1fr_380px]
 gap-10
 ">
-
-
-
 {/* LEFT FORM */}
-
-
 <form
 onSubmit={handleSubmit}
 className="
 space-y-8
 "
 >
-
-
-
-
 {/* DETAILS */}
-
 <section className="
 rounded-3xl
 bg-white
@@ -262,20 +173,15 @@ p-7
 shadow-xl
 shadow-blue-100/40
 ">
-
-
 <div className="
 flex
 items-center
 gap-3
 mb-6
 ">
-
-
 <FileText
 className="text-blue-600"
 />
-
 <h2 className="
 font-semibold
 text-lg
@@ -312,28 +218,16 @@ onChange={handleChange}
 placeholder="Example: Engineering Mathematics Book"
 
 />
-
-</div>
-
-
-
-
-<div>
-
+</div><div>
 <Label>
 Description
 </Label>
 
 <Textarea
-
 name="description"
-
 value={form.description}
-
 onChange={handleChange}
-
 placeholder="Describe condition and details"
-
 />
 </div>
 </div>
@@ -392,17 +286,10 @@ outline-none
 <option value="SELL">
 Sell
 </option>
-
 <option value="RENT">
 Rent
 </option>
-
-
 </select>
-
-
-
-
 <select
 name="category"
 value={form.category}
@@ -413,18 +300,13 @@ bg-slate-50
 px-4
 py-3
 outline-none
-"
->
-
-
+">
 <option>
 BOOKS
 </option>
-
 <option>
 NOTES
 </option>
-
 <option>
 ELECTRONICS
 </option>
@@ -440,7 +322,6 @@ LAB EQUIPMENT
 <option>
 OTHERS
 </option>
-
 </select>
 <select
 name="condition"
@@ -455,11 +336,7 @@ bg-slate-50
 px-4
 py-3
 outline-none
-"
-
->
-
-
+">
 <option>
 NEW
 </option>
@@ -493,9 +370,7 @@ items-center
 gap-3
 mb-5
 ">
-
 <IndianRupee className="text-blue-600"/>
-
 <h2 className="font-semibold text-lg">
 Pricing
 </h2>
@@ -710,13 +585,9 @@ form.description ||
 <Badge variant="secondary">
 {form.condition}
 </Badge>
-</div>
-</div>
-</div>
+</div></div></div>
 </aside>
-</div>
-</div>
-</div>
+</div></div></div>
 </AppShell>
 );
 }
