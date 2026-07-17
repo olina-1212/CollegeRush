@@ -1,32 +1,40 @@
 import prisma from "../config/prisma.js";
 
 export const startConversation = async (
-  buyerId,
-  sellerId,
-  listingId
+ buyerId,
+ sellerId,
+ listingId = null,
+ workPostId = null
 ) => {
 
-  let conversation = await prisma.conversation.findUnique({
-    where: {
-      buyerId_sellerId_listingId: {
-        buyerId,
-        sellerId,
-        listingId,
-      },
+let conversation = await prisma.conversation.findFirst({
+where:{
+  buyerId,
+  sellerId,
+  OR:[
+    {
+      listingId,
+      workPostId:null
     },
-  });
-
+    {
+      workPostId,
+      listingId:null
+    }
+  ]
+},
+});
   if (conversation) {
     return conversation;
   }
 
-  conversation = await prisma.conversation.create({
-    data: {
-      buyerId,
-      sellerId,
-      listingId,
-    },
-  });
+ conversation = await prisma.conversation.create({
+  data:{
+    buyerId,
+    sellerId,
+    listingId,
+    workPostId,
+  },
+});
 
   return conversation;
 };
@@ -41,7 +49,9 @@ export const getConversation = async (conversationId) => {
 
     include: {
 
-      listing: true,
+  listing: true,
+
+  workPost: true,
 
       buyer: {
         select: {
@@ -95,11 +105,13 @@ export const getMyConversations = async (userId) => {
 
     include: {
 
-      listing: {
-        include: {
-          images: true,
-        },
-      },
+  listing:{
+    include:{
+      images:true,
+    },
+  },
+
+  workPost:true,
 
       buyer: true,
 

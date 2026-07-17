@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { MessageCircle } from "lucide-react";
 import {
   CalendarDays,
   IndianRupee,
@@ -15,7 +17,7 @@ import EmptyState from "../components/dashboard/EmptyState";
 
 
 function Work() {
-
+const navigate = useNavigate();
   const [works, setWorks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -74,7 +76,25 @@ function Work() {
   },[works,search]);
 
 
+const startConversation = async (workPostId) => {
+  try {
 
+    const res = await api.post("/chat/start", {
+      workPostId: workPostId,
+    });
+
+    const conversationId = res.data.data.id;
+
+    navigate(`/messages/${conversationId}`);
+
+  } catch (err) {
+    console.error(err);
+    alert(
+      err.response?.data?.message ||
+      "Unable to start chat"
+    );
+  }
+};
 return (
 
 <AppShell
@@ -511,11 +531,13 @@ text-slate-500
 </div>
 </div>
 <Button
+onClick={() => startConversation(work.id)}
 className="
-mt-5
+mt-4
 w-full
 rounded-xl
-">
+"
+>
 Contact Student
 </Button>
 </div>

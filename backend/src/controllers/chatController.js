@@ -9,33 +9,81 @@ import { getIO } from "../socket/socketManager.js";
 export const startConversation = async (req, res) => {
   try {
     const buyerId = req.user.id;
-    const { listingId } = req.body;
+    const { listingId, workPostId } = req.body;
 
-    const listing = await prisma.listing.findUnique({
-      where: {
-        id: listingId,
-      },
-    });
 
-    if (!listing) {
-      return res.status(404).json({
-        success: false,
-        message: "Listing not found",
-      });
-    }
+let sellerId;
 
-    if (listing.sellerId === buyerId) {
+
+// CASE 1: LISTING CHAT
+
+if(listingId){
+
+const listing = await prisma.listing.findUnique({
+ where:{
+   id:listingId
+ }
+});
+
+
+if(!listing){
+ return res.status(404).json({
+  success:false,
+  message:"Listing not found"
+ });
+}
+
+
+sellerId = listing.sellerId;
+
+}
+
+
+
+// CASE 2: WORK CHAT
+
+if(workPostId){
+
+const workPost = await prisma.workPost.findUnique({
+
+where:{
+ id:workPostId
+}
+
+});
+
+
+if(!workPost){
+
+return res.status(404).json({
+
+success:false,
+message:"Work post not found"
+
+});
+
+}
+
+
+sellerId = workPost.sellerId;
+
+
+}
+
+    if (sellerId === buyerId){
       return res.status(400).json({
         success: false,
         message: "You can't chat with yourself.",
       });
     }
 
-    const conversation = await chatService.startConversation(
-      buyerId,
-      listing.sellerId,
-      listingId
-    );
+    const conversation =
+await chatService.startConversation(
+ buyerId,
+ sellerId,
+ listingId,
+ workPostId
+);
 
     return res.status(200).json({
       success: true,

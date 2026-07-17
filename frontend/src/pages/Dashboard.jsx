@@ -6,13 +6,14 @@ import CategoryChip from "../components/dashboard/CategoryChip";
 import ProductCard from "../components/dashboard/ProductCard";
 import FilterPanel from "../components/dashboard/FilterPanel";
 import EmptyState from "../components/dashboard/EmptyState";
-import { SlidersHorizontal, X } from "lucide-react";
+import { SlidersHorizontal, X, ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 
 const CATEGORIES = [
   "ALL",
   "BOOKS",
-  "NOTES",
+  "NOTES", 
   "ELECTRONICS",
   "SUPPLIES",
   "ESSENTIALS",
@@ -122,22 +123,149 @@ const filteredListings = useMemo(() => {
         gap-6
       ">
         {/* HEADER */}
-        <div>
-          <h1 className="
-            text-2xl
-            font-semibold
-            tracking-tight
-          ">
-            Browse listings
-          </h1>
-          <p className="
-            mt-1
-            text-sm
-            text-muted-foreground
-          ">
-            Fresh finds from students across campus.
-          </p>
-        </div>
+        {/* WORK CTA */}
+
+<Link to="/work">
+
+<div
+className="
+mt-6
+relative
+overflow-hidden
+rounded-[28px]
+bg-gradient-to-br
+from-blue-600
+via-indigo-600
+to-violet-600
+p-5
+text-white
+shadow-xl
+transition-all
+duration-300
+hover:-translate-y-1
+hover:shadow-2xl
+sm:p-7
+"
+>
+
+{/* Glow */}
+
+<div
+className="
+absolute
+-right-10
+-top-10
+h-32
+w-32
+rounded-full
+bg-white/20
+blur-3xl
+"
+/>
+
+
+<div
+className="
+relative
+flex
+flex-col
+gap-5
+sm:flex-row
+sm:items-center
+sm:justify-between
+"
+>
+
+<div className="flex gap-4">
+
+
+<div
+className="
+flex
+h-12
+w-12
+shrink-0
+items-center
+justify-center
+rounded-2xl
+bg-white/20
+backdrop-blur
+sm:h-14
+sm:w-14
+"
+>
+
+<Sparkles
+className="text-white"
+size={26}
+/>
+
+</div>
+
+
+<div>
+
+<h2
+className="
+text-xl
+font-bold
+sm:text-2xl
+"
+>
+Need Academic Help?
+</h2>
+
+
+<p
+className="
+mt-1
+max-w-md
+text-sm
+leading-6
+text-blue-100
+"
+>
+Find students who can help with assignments,
+reports and projects.
+</p>
+
+
+</div>
+
+</div>
+
+
+<div
+className="
+flex
+items-center
+justify-between
+gap-3
+rounded-2xl
+bg-white
+px-4
+py-3
+text-sm
+font-semibold
+text-blue-600
+shadow-lg
+sm:w-fit
+"
+>
+
+Explore Work
+
+<ArrowRight size={18}/>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</Link>
         {/* CATEGORY CHIPS */}
        {/* CATEGORY CHIPS */}
 <div
