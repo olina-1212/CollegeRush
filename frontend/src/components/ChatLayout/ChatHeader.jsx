@@ -16,9 +16,20 @@ function ChatHeader({ conversation, currentUser }) {
       ? conversation.seller
       : conversation.buyer;
 
-  const image =
-    conversation.listing?.images?.[0]?.url ||
+  const isWorkChat = !!conversation.workPost;
+
+const image = isWorkChat
+  ? "https://placehold.co/80x80?text=Work"
+  : conversation.listing?.images?.[0]?.url ||
     "https://placehold.co/80x80";
+
+const title = isWorkChat
+  ? conversation.workPost?.title
+  : conversation.listing?.title;
+
+const location = isWorkChat
+  ? "Campus"
+  : conversation.listing?.location;
 
   return (
     <header
@@ -70,7 +81,7 @@ function ChatHeader({ conversation, currentUser }) {
   <div className="min-w-0">
 
     <h2 className="truncate text-base font-bold text-slate-900 sm:text-lg">
-      {conversation.listing.title}
+      {title}
     </h2>
 
     <div className="mt-1 flex items-center gap-2">
@@ -101,7 +112,7 @@ function ChatHeader({ conversation, currentUser }) {
           <MapPin size={15} />
 
           <span className="text-sm text-slate-600">
-            {conversation.listing.location || "Campus"}
+            {location || "Campus"}
           </span>
 
         </div>

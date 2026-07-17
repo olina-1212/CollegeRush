@@ -47,44 +47,46 @@ export const getConversation = async (conversationId) => {
       id: conversationId,
     },
 
+   include: {
+  listing: {
     include: {
-
-  listing: true,
+      images: true,
+    },
+  },
 
   workPost: true,
 
-      buyer: {
+  buyer: {
+    select: {
+      id: true,
+      name: true,
+      avatarUrl: true,
+    },
+  },
+
+  seller: {
+    select: {
+      id: true,
+      name: true,
+      avatarUrl: true,
+    },
+  },
+
+  messages: {
+    orderBy: {
+      createdAt: "asc",
+    },
+    include: {
+      sender: {
         select: {
           id: true,
           name: true,
           avatarUrl: true,
-        },
-      },
-
-      seller: {
-        select: {
-          id: true,
-          name: true,
-          avatarUrl: true,
-        },
-      },
-
-      messages: {
-        orderBy: {
-          createdAt: "asc",
-        },
-
-        include: {
-          sender: {
-            select: {
-              id: true,
-              name: true,
-              avatarUrl: true,
-            },
-          },
         },
       },
     },
+  },
+}
   });
 };
 
