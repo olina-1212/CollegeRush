@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createListing } from "../api/listingApi";
+import { celebrateListing } from "../lib/confetti";
 
 import AppShell from "../components/dashboard/AppShell";
 import api from "../api/apiClient";
-
+import ListingSuccess from "../components/ui/ListingSuccess";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { Label } from "../components/ui/Label";
@@ -31,6 +32,7 @@ category:"BOOKS",
 condition:"LIKE_NEW",
 location:""
 });
+const [showSuccess, setShowSuccess] = useState(false);
 const [images,setImages] = useState([]);
 const [loading,setLoading] = useState(false);
 const handleChange=(e)=>{
@@ -58,15 +60,22 @@ img
 
 });
 await api.post(
-"/listings",
-data,
-{
-headers:{
-"Content-Type":"multipart/form-data"
-}
-}
+  "/listings",
+  data,
+  {
+    headers:{
+      "Content-Type":"multipart/form-data"
+    }
+  }
 );
 
+celebrateListing();
+
+setShowSuccess(true);
+
+setTimeout(() => {
+  navigate("/profile");
+}, 2000);
 
 
 navigate("/profile")
@@ -588,6 +597,7 @@ form.description ||
 </div></div></div>
 </aside>
 </div></div></div>
+{showSuccess && <ListingSuccess />}
 </AppShell>
 );
 }

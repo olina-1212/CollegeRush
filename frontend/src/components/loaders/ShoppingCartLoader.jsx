@@ -1,30 +1,23 @@
 import { motion } from "framer-motion";
-import {
-  ShoppingCart,
-  BookOpen,
-  Laptop,
-  Headphones,
-  Package,
-} from "lucide-react";
 
 const items = [
   {
-    Icon: BookOpen,
+    emoji: "📚",
     start: { x: -120, y: 70 },
     delay: 0,
   },
   {
-    Icon: Laptop,
+    emoji: "💻",
     start: { x: -40, y: 90 },
     delay: 0.5,
   },
   {
-    Icon: Headphones,
+    emoji: "🎧",
     start: { x: 40, y: 90 },
     delay: 1,
   },
   {
-    Icon: Package,
+    emoji: "📦",
     start: { x: 120, y: 70 },
     delay: 1.5,
   },
@@ -39,24 +32,26 @@ export default function ShoppingCartLoader() {
 
         {/* Cart */}
         <motion.div
-          className="absolute left-1/2 top-4 -translate-x-1/2 text-primary"
+          className="absolute left-1/2 top-4 -translate-x-1/2 text-5xl md:text-6xl"
           animate={{
-            scale: [1, 1.12, 1],
+            scale: [1, 1.15, 1],
+            rotate: [0, -5, 5, 0],
           }}
           transition={{
-            duration: 0.35,
+            duration: 0.6,
             repeat: Infinity,
-            repeatDelay: 1.65,
+            repeatDelay: 1.2,
           }}
         >
-          <ShoppingCart className="w-16 h-16 md:w-20 md:h-20" />
+          🛒
         </motion.div>
 
+
         {/* Flying Items */}
-        {items.map(({ Icon, start, delay }, index) => (
+        {items.map(({ emoji, start, delay }, index) => (
           <motion.div
             key={index}
-            className="absolute left-1/2 top-4 text-muted-foreground"
+            className="absolute left-1/2 top-4 text-3xl md:text-4xl"
             initial={{
               opacity: 0,
               x: start.x,
@@ -67,20 +62,23 @@ export default function ShoppingCartLoader() {
               opacity: [0, 1, 1, 0],
               x: [start.x, 0],
               y: [start.y, 0],
-              scale: [0.8, 1, 0.3],
+              scale: [0.8, 1.1, 0.3],
+              rotate: [0, 15, -15, 0],
             }}
             transition={{
-              duration: 0.8,
+              duration: 0.9,
               delay,
               repeat: Infinity,
-              repeatDelay: 1.2,
+              repeatDelay: 1.1,
               ease: "easeInOut",
             }}
           >
-            <Icon className="w-8 h-8 md:w-10 md:h-10" />
+            {emoji}
           </motion.div>
         ))}
+
       </div>
+
 
       {/* Text */}
       <motion.p
@@ -95,6 +93,7 @@ export default function ShoppingCartLoader() {
       >
         Finding the best campus deals...
       </motion.p>
+
     </div>
   );
 }
