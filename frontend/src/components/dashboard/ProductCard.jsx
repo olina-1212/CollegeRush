@@ -42,9 +42,6 @@ whileHover={{
   scale: 1.02,
 }}
 
-whileTap={{
-  scale: 0.97,
-}}
 
 transition={{
   delay: index * 0.08,
@@ -52,7 +49,35 @@ transition={{
   stiffness: 280,
   damping: 22,
 }}
-      onClick={onOpen}
+      onClick={(e) => {
+  const card = e.currentTarget;
+
+  card.animate(
+    [
+      {
+        transform: "scale(1)",
+        opacity: 1,
+      },
+      {
+        transform: "scale(1.08)",
+        opacity: 0.6,
+      },
+      {
+        transform: "scale(1.15)",
+        opacity: 0,
+      },
+    ],
+    {
+      duration: 350,
+      easing: "ease-in-out",
+      fill: "forwards",
+    }
+  );
+
+  setTimeout(() => {
+    onOpen();
+  }, 300);
+}}
 
       className="
         group
@@ -63,10 +88,10 @@ transition={{
         border-slate-100
         bg-white
         shadow-sm
-        transition-all
-        duration-300
-        hover:-translate-y-1
-        hover:shadow-xl
+        transition-shadow
+duration-300
+hover:-translate-y-1
+hover:shadow-xl
       "
     >
 

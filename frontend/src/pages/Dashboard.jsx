@@ -410,19 +410,15 @@ Explore Work
   lg:grid-cols-3
 "
       >
-        {filteredListings.map((item, index) => (
- <ProductCard
-  key={item.id}
-  listing={item}
-  index={index}
-  onOpen={() => {
-    setShowTransition(true);
-
-    setTimeout(() => {
+       {filteredListings.map((item, index) => (
+  <ProductCard
+    key={item.id}
+    listing={item}
+    index={index}
+    onOpen={() => {
       navigate(`/item/${item.id}`);
-    }, 500);
-  }}
-/>
+    }}
+  />
 ))}
       </div>
     )}
