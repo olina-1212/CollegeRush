@@ -6,6 +6,7 @@ import CategoryChip from "../components/dashboard/CategoryChip";
 import ProductCard from "../components/dashboard/ProductCard";
 import FilterPanel from "../components/dashboard/FilterPanel";
 import EmptyState from "../components/dashboard/EmptyState";
+import ShoppingCartLoader from "../components/loaders/ShoppingCartLoader";
 import { SlidersHorizontal, X, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -388,9 +389,7 @@ Explore Work
     {/* Listings */}
 
     {loading ? (
-      <div className="flex justify-center py-20 text-muted-foreground">
-        Loading listings...
-      </div>
+      <ShoppingCartLoader />
     ) : error ? (
       <EmptyState
         title="Something went wrong"
