@@ -409,12 +409,13 @@ Explore Work
   lg:grid-cols-3
 "
       >
-        {filteredListings.map((item) => (
-          <ProductCard
-            key={item.id}
-            listing={item}
-          />
-        ))}
+        {filteredListings.map((item, index) => (
+  <ProductCard
+    key={item.id}
+    listing={item}
+    index={index}
+  />
+))}
       </div>
     )}
 
