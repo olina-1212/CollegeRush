@@ -26,27 +26,32 @@ function ProductCard({
   return (
     <motion.div
       initial={{
-        opacity: 0,
-        y: 25,
-        scale: 0.96,
-      }}
+  opacity: 0,
+  y: 25,
+  scale: 0.96,
+}}
 
-      animate={{
-        opacity: 1,
-        y: 0,
-        scale: 1,
-      }}
+animate={{
+  opacity: 1,
+  y: 0,
+  scale: 1,
+}}
 
-      transition={{
-        duration: 0.35,
-        delay: index * 0.12,
-        ease: "easeOut",
-      }}
+whileHover={{
+  y: -6,
+  scale: 1.02,
+}}
 
-      whileTap={{
-        scale: 0.97,
-      }}
+whileTap={{
+  scale: 0.97,
+}}
 
+transition={{
+  delay: index * 0.08,
+  type: "spring",
+  stiffness: 280,
+  damping: 22,
+}}
       onClick={onOpen}
 
       className="
@@ -220,16 +225,9 @@ function ProductCard({
             📍 {listing.location || "Campus"}
           </p>
 
-
         </div>
-
-
       </div>
-
-
     </motion.div>
   );
 }
-
-
 export default ProductCard;
