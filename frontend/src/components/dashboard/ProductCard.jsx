@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-
+import CategoryPlaceholder from "@/components/ui/CategoryPlaceholder";
 import { Badge } from "@/components/ui/Badge";
 
 function ProductCard({ listing, index = 0 }) {
@@ -74,19 +74,28 @@ function ProductCard({ listing, index = 0 }) {
         "
       >
 
-        <img
-          src={image}
-          alt={listing.title}
-          className="
-            h-full
-            w-full
-            object-cover
-            transition-transform
-            duration-500
-            group-hover:scale-105
-          "
-        />
-
+       {
+ listing.images?.length > 0 ? (
+    <img
+      src={image}
+      alt={listing.title}
+      className="
+        h-full
+        w-full
+        object-cover
+        transition-transform
+        duration-500
+        group-hover:scale-105
+      "
+    />
+ )
+ :
+ (
+    <CategoryPlaceholder
+      category={listing.category}
+    />
+ )
+}
 
         {/* Image Gradient */}
 
