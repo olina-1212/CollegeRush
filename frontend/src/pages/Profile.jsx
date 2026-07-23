@@ -100,6 +100,20 @@ setEditing(false);
       alert("Couldn't delete listing.");
     }
   };
+  const deleteWork = async (id) => {
+  if (!window.confirm("Delete this work request?")) return;
+
+  try {
+    await api.delete(`/work/${id}`); // change this if your route is different
+
+    setWorkPosts((prev) =>
+      prev.filter((work) => work.id !== id)
+    );
+  } catch (err) {
+    console.error(err);
+    alert("Couldn't delete work request.");
+  }
+};
 const stats = useMemo(() => {
   return {
     total: listings.length,
@@ -651,37 +665,60 @@ text-slate-500
 {work.description}
 </p>
 
+<div
+  className="
+    mt-5
+    flex
+    items-center
+    justify-between
+  "
+>
+  <div className="flex gap-3">
 
-<div className="
-mt-4
-flex
-flex-wrap
-gap-3
-">
+    <span
+      className="
+        rounded-full
+        bg-blue-50
+        px-4
+        py-2
+        text-sm
+        text-blue-600
+      "
+    >
+      {work.subject}
+    </span>
 
-<span className="
-rounded-full
-bg-blue-50
-px-4
-py-2
-text-sm
-text-blue-600
-">
-{work.subject}
-</span>
+    <span
+      className="
+        rounded-full
+        bg-green-50
+        px-4
+        py-2
+        text-sm
+        text-green-600
+      "
+    >
+      ₹{work.budget}
+    </span>
 
+  </div>
 
-<span className="
-rounded-full
-bg-green-50
-px-4
-py-2
-text-sm
-text-green-600
-">
-₹{work.budget}
-</span>
-
+  <Button
+    variant="ghost"
+    size="icon"
+    className="
+      h-9
+      w-9
+      rounded-xl
+      text-slate-400
+      hover:bg-red-50
+      hover:text-red-500
+      transition-all
+    "
+    onClick={() => deleteWork(work.id)}
+  >
+    <Trash2 className="h-4 w-4" />
+  </Button>
 
 </div>
 
