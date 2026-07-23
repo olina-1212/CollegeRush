@@ -1,3 +1,4 @@
+import api from "../api/apiClient";
 import { useEffect, useMemo, useState } from "react";
 import AppShell from "../components/dashboard/AppShell";
 import CategoryChip from "../components/dashboard/CategoryChip";
