@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-
+import ChatLoader from "../loaders/ChatLoader";
 function ChatMessages({
   conversation,
   currentUser,
@@ -15,17 +15,8 @@ function ChatMessages({
   }, [conversation?.messages]);
 
   if (loading) {
-    return (
-      <div className="flex flex-1 items-center justify-center bg-[#f8fafc]">
-        <div className="flex flex-col items-center gap-3">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-slate-800" />
-          <p className="text-sm font-medium text-slate-500">
-            Loading conversation...
-          </p>
-        </div>
-      </div>
-    );
-  }
+  return <ChatLoader />;
+}
 
   if (!conversation) {
     return (
