@@ -1,6 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import api from "../api/apiClient";
-
 import AppShell from "../components/dashboard/AppShell";
 import CategoryChip from "../components/dashboard/CategoryChip";
 import ProductCard from "../components/dashboard/ProductCard";
@@ -8,7 +6,8 @@ import FilterPanel from "../components/dashboard/FilterPanel";
 import EmptyState from "../components/dashboard/EmptyState";
 import ShoppingCartLoader from "../components/loaders/ShoppingCartLoader";
 import { SlidersHorizontal, X, ArrowRight, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import OwlTransition from "../components/ui/OwlTransition";
 
 
 const CATEGORIES = [
@@ -22,6 +21,9 @@ const CATEGORIES = [
   "OTHERS"
 ];
 function Dashboard() {
+  const navigate = useNavigate();
+  const [showTransition, setShowTransition] = useState(false);
+  const [owlLoading,setOwlLoading] = useState(false);
   const [listings,setListings] = useState([]);
   const [loading,setLoading] = useState(true);
   const [error,setError] = useState("");
@@ -118,11 +120,9 @@ const filteredListings = useMemo(() => {
   setSearch={setSearch}
 >
 
-      <div className="
-        flex
-        flex-col
-        gap-6
-      ">
+<OwlTransition show={showTransition} />
+
+<div className="flex flex-col gap-6">
         {/* HEADER */}
         {/* WORK CTA */}
 
@@ -410,11 +410,18 @@ Explore Work
 "
       >
         {filteredListings.map((item, index) => (
-  <ProductCard
-    key={item.id}
-    listing={item}
-    index={index}
-  />
+ <ProductCard
+  key={item.id}
+  listing={item}
+  index={index}
+  onOpen={() => {
+    setShowTransition(true);
+
+    setTimeout(() => {
+      navigate(`/item/${item.id}`);
+    }, 500);
+  }}
+/>
 ))}
       </div>
     )}

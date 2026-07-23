@@ -1,10 +1,13 @@
-import { useNavigate } from "react-router-dom";
+
 import { motion } from "framer-motion";
 import CategoryPlaceholder from "@/components/ui/CategoryPlaceholder";
 import { Badge } from "@/components/ui/Badge";
 
-function ProductCard({ listing, index = 0 }) {
-  const navigate = useNavigate();
+function ProductCard({
+  listing,
+  index = 0,
+  onOpen,
+}) {
 
   const image =
     listing.images?.length > 0
@@ -44,7 +47,7 @@ function ProductCard({ listing, index = 0 }) {
         scale: 0.97,
       }}
 
-      onClick={() => navigate(`/item/${listing.id}`)}
+      onClick={onOpen}
 
       className="
         group
