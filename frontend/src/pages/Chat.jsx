@@ -148,19 +148,20 @@ useEffect(() => {
 }, [id]);
     return (
     <AppShell>
-      <div className="mx-auto max-w-7xl px-4 py-6">
+      <div className="mx-auto max-w-7xl px-2 sm:px-4 py-3 sm:py-6">
 
         <div
-          className="
-          overflow-hidden
-          rounded-[30px]
-          border
-          border-slate-200
-          bg-white
-          shadow-[0_20px_60px_rgba(15,23,42,.08)]
-          "
-        >
-          <div className="flex h-[calc(100dvh-80px)] overflow-hidden">
+  className="
+    overflow-hidden
+    rounded-[24px]
+    sm:rounded-[30px]
+    border
+    border-slate-200
+    bg-white
+    shadow-[0_20px_60px_rgba(15,23,42,.08)]
+  "
+>
+          <div className="flex h-[calc(100dvh-64px)] sm:h-[calc(100dvh-80px)] overflow-hidden">
             {/* Sidebar */}
 
            <div
@@ -171,7 +172,7 @@ useEffect(() => {
     w-full
     border-r
     lg:block
-    lg:w-[340px]
+    lg:w-[320px] xl:w-[340px]
   `}
 >
   <ChatSidebar
@@ -183,14 +184,14 @@ useEffect(() => {
 </div>
             {/* Chat Area */}
 
-            <div
+           <div
   className={`
-    ${
-      id ? "flex" : "hidden"
-    }
+    ${id ? "flex" : "hidden"}
     min-h-0
+    min-w-0
     flex-1
     flex-col
+    bg-[#f8fafc]
     lg:flex
   `}
 >

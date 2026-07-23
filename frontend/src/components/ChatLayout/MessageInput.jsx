@@ -19,41 +19,51 @@ function MessageInput({
   return (
     <div
       className="
-      border-t
-      border-slate-200
-      bg-white
-      px-4
-      py-4
-      "
+sticky
+bottom-0
+z-20
+border-t
+border-slate-200/80
+bg-white/95
+backdrop-blur-xl
+px-3
+sm:px-4
+py-3
+"
     >
       <div
         className="
-        mx-auto
-        flex
-        max-w-3xl
-        items-end
-        gap-3
-        "
+mx-auto
+flex
+w-full
+max-w-2xl
+items-end
+gap-2
+sm:gap-3
+"
       >
         {/* Future attachment button */}
 
         <button
           type="button"
-          className="
-          flex
-          h-12
-          w-12
-          shrink-0
-          items-center
-          justify-center
-          rounded-2xl
-          border
-          border-slate-200
-          bg-slate-50
-          text-slate-500
-          transition
-          hover:bg-slate-100
-          "
+         className="
+flex
+h-10
+w-10
+sm:h-11
+sm:w-11
+shrink-0
+items-center
+justify-center
+rounded-xl
+border
+border-slate-200
+bg-slate-50
+text-slate-500
+transition-all
+hover:bg-slate-100
+hover:scale-105
+"
         >
           <Paperclip size={18} />
         </button>
