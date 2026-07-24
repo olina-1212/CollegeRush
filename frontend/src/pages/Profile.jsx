@@ -104,7 +104,7 @@ setEditing(false);
   if (!window.confirm("Delete this work request?")) return;
 
   try {
-    await api.delete(`/work/${id}`); // change this if your route is different
+    await api.delete(`/workposts/${id}`); // change this if your route is different
 
     setWorkPosts((prev) =>
       prev.filter((work) => work.id !== id)
